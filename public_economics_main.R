@@ -1,10 +1,21 @@
-#this is the main file
+#########this is the main file
 
-#packages
+#install.packages("MASS")
+#install.packages("tidyverse")
+#install.packages("dplyr")
+#install.packages("ggplot2")
+
+#packages (install before!)
 library(MASS)
-#setting working directory
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+#setting working directory to the right folder wrt github
 goalwd <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(goalwd)
-#load data
+
+#load data (in same folder)
 data <- read.csv2("MonthlyPanel.csv", header = T)
 View(data)
+
+########################
