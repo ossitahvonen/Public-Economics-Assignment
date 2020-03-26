@@ -19,9 +19,10 @@ library(ggplot2)
 goalwd <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(goalwd)
 
+
 #load data (in same folder)
 data <- read.csv2("MonthlyPanel.csv", header = T)
-
+View(data)
 ########################
 #2. Open data and provide summary statistics similar to those in table 1.
 
