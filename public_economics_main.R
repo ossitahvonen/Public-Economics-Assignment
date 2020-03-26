@@ -20,3 +20,5 @@ data <- read.csv2("MonthlyPanel.csv", header = T)
 ########################
 #2. Open data and provide summary statistics similar to those in table 1.
 
+#koira
+
