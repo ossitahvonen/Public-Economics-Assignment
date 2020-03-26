@@ -5,6 +5,11 @@
 #install.packages("dplyr")
 #install.packages("ggplot2")
 
+
+
+###1. A Ossi B Miia
+
+
 #packages (install before!)
 library(MASS)
 library(tidyverse)
