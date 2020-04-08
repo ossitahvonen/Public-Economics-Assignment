@@ -5,30 +5,25 @@ date: "23/03/2020"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
 
 ###1. 
 1. Read the macro study by Fölster and Henrekson (2001)
 A) Summarize the main econometric approach and the findings in the study.
 
-The authors use combined cross-section time series regressions with 5-year periods. They exploit within country variation to increase the efficiency. They use controls for periods and countries to get rid of short term endogeneity problems (caused by business cycles) and to allow for country specific production functions. They also report regressions using 2SLS (i.e. instrumental variables) to control for business cycles. The problem of selection on the OECD countries is controlled by running regressions with additional data set of more countries. The researchers correct for heteroscedasticity between countries and 
+The authors use combined cross-section time series regressions with 5-year periods. They exploit within country variation to increase the efficiency. They use controls for periods and countries to get rid of short term endogeneity problems (caused by business cycles) and to allow for country specific production functions. They also report regressions using 2SLS (i.e. instrumental variables) to control for business cycles. The problem of selection on the OECD countries is controlled by running regressions with additional data set of more countries. The researchers correct for heteroscedasticity between countries and _____????
 
-The paper finds significant negative effects between government expenditure and economic growth. These effects persist in 2SLS regressions and additional country data.
+The paper finds significant (HOW BIG, NOT FOR TAXES) negative effects between government expenditure and economic growth. These effects persist in 2SLS (WHAT WAS THE INSTRUMENT) regressions and additional country data. SAVINGS ROBUSTNESS
 
 The robustness tests show that the effect of government expenditure is more robust than the effect of the taxes. Neither is robust by the strict definition of the extreme bounds analysis.
 
-B) How does the empirical strategy in the paper differ from the micro studies discussed in the
-class? How credible it is in comparison to studies presented at the course?
+B) How does the empirical strategy in the paper differ from the micro studies discussed in the class? How credible it is in comparison to studies presented at the course?
 
-The amount of possible endogeneity/omitted variable problems and level of possible extrapolation hugely differs from the micro level studies. In many micro-level studies, the identification strategy is based on some kind of controllized trial -type of situation but this is obviously not possible on macro level. The results of the reported checks are encouraging, as they mostly show no problems, but it is possible that there still are persisting problems in making a causal intrepretation of the estimates (and this is not what the paper suggests, they even admit that "In general,
+The amount of possible endogeneity/omitted variable problems and level of possible extrapolation hugely differs from the micro level studies. In many micro-level studies, the identification strategy is based on some kind of randomized controllized trial -type of situation but this is obviously not possible on macro level. The results of the reported checks are encouraging, as they mostly show no problems, but it is possible that there still are persisting problems in making a causal intrepretation of the estimates (and this is not what the paper suggests, they even admit that "In general,
 it is hardly possible to solve all econometric problems.").
 
 
 
-C) How would you comment on the impact of the size of the public sector on economic
-growth on the based on its results?
+C) How would you comment on the impact of the size of the public sector on economic growth on the based on its results?
 
 It seems that there is, if the econometric approach is considered viable, a negative impact between the size of the public sector and the economic growth. As noted before, this is questionable. The robustness tests show that the result can be extended to differing combinations of controlling variables. This lends credibility to the result. Of course, as the title of the paper suggests, the results are only from the data in rich countries, and the result can not be extrapolated to developing countries.
 
