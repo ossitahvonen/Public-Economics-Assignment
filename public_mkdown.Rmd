@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Read the macro study by Fölster and Henrekson (2001)
 A) Summarize the main econometric approach and the findings in the study.
 
-The authors use combined cross-section time series regressions with 5-year periods. They exploit within country variation to increase the efficiency. They use controls for periods and countries to get rid of short term endogeneity problems (caused by business cycles) and to allow for country specific production functions. They also report regressions using 2SLS (i.e. instrumental variables) to control for business cycles. The problem of selection on the OECD countries is controlled by running regressions with additional data set of more countries.The researchers correct for heteroscedasticity between countries and 
+The authors use combined cross-section time series regressions with 5-year periods. They exploit within country variation to increase the efficiency. They use controls for periods and countries to get rid of short term endogeneity problems (caused by business cycles) and to allow for country specific production functions. They also report regressions using 2SLS (i.e. instrumental variables) to control for business cycles. The problem of selection on the OECD countries is controlled by running regressions with additional data set of more countries. The researchers correct for heteroscedasticity between countries and 
 
 The paper finds significant negative effects between government expenditure and economic growth. These effects persist in 2SLS regressions and additional country data.
 
