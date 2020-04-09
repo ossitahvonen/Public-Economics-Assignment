@@ -27,3 +27,10 @@ C) How would you comment on the impact of the size of the public sector on econo
 It seems that there is, if the econometric approach is considered viable, a negative impact between the size of the public sector and the economic growth. As noted before, this is questionable. The robustness tests show that the result can be extended to differing combinations of controlling variables. This lends credibility to the result. Of course, as the title of the paper suggests, the results are only from the data in rich countries, and the result can not be extrapolated to developing countries.
 
 There is also need to note that the results of this research only concern the sample of relatively high-income countries. If one were to exrapolate the results to some lower income level countries, it could result in a problematic interpretation. The question can therefore be answered only on behalf the countries that represent the sample. In addition, the paper does not concern the structure of the public expenditure. The result does not therefore mean that all public spending is bad for economomic growth and some expenditure might be beneficial (for instance government actions in coronavirus situation).
+
+
+###2.
+
+A) The main question is if the vocational education has monetary returns and how big these returns are, with also consideration on how long these returns last.
+
+B)
