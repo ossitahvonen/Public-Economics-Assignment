@@ -49,4 +49,20 @@ colnames(table) <- c("Census tracts without Jewish institutions", "Census tracts
 #get standard deviations
 SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd))[1:5,]
 
+######
+#
+
+
+#3d uses data after events
+table(data$distanci)
+#add dummy for 2 blocks to data 
+data <- cbind(data, as.numeric(data$distanci==2))
+
+
+
+
+
+
+
+
 
