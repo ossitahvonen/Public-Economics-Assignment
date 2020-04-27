@@ -31,4 +31,6 @@ View(data)
 #institu1 = dummy for jewish institution
 #institu3 = dummy for jewish institution 1 block away
 
-
+#new dummy that has 0 if no jewish institution in same or neighbouring block
+jewin <- as.numeric(data$institu1|data$institu3)
+jewin
