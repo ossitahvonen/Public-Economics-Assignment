@@ -17,6 +17,7 @@ library(MASS)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(stargazer)
 #setting working directory to the right folder wrt github
 goalwd <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(goalwd)
