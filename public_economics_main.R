@@ -58,8 +58,8 @@ table(data$distanci)
 #add dummy for 2 blocks to data 
 data <- cbind(data, as.numeric(data$distanci==2))
 
-
-
+#months before the dramatic events when everyone was happy 
+data_pre <- data[data$mes<=12,]
 
 
 
