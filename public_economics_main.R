@@ -5,6 +5,7 @@ rm(list=ls())
 #install.packages("tidyverse")
 #install.packages("dplyr")
 #install.packages("ggplot2")
+#install.packages("stargazer")
 
 
 
@@ -34,4 +35,6 @@ View(data)
 
 #new dummy that has 0 if no jewish institution in same or neighbouring block
 jewin <- as.numeric(data$institu1|data$institu3)
-jewin
+
+#table
+
