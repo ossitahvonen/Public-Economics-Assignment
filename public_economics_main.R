@@ -35,6 +35,18 @@ View(data)
 
 #new dummy that has 0 if no jewish institution in same or neighbouring block
 jewin <- as.numeric(data$institu1|data$institu3)
-
+data <- cbind(data,jewin)
 #table
+#(hieman hankala tapa tehdä)
+data2 <- as.tibble(data)
+data2 <- data %>% dplyr::select(distanci, edpub, estserv, banco,totrob, jewin)
+table <- cbind(apply(data2[data2$jewin==0,],2,mean),apply(data2[data2$jewin==1,],2,mean))[1:5,]
+table <- cbind(table,table[,1]-table[,2])
+colnames(table) <- c("Census tracts without Jewish institutions", "Census tracts with Jewish institutions", "Difference")
+
+#saako standard deviationin jotenkin helposti mukaan taulukkoon?
+#xtable(table)
+#get standard deviations
+SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd))[1:5,]
+
 
