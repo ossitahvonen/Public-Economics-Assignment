@@ -1,4 +1,5 @@
 #########this is the main file
+rm(list=ls())
 
 #install.packages("MASS")
 #install.packages("tidyverse")
@@ -27,5 +28,7 @@ View(data)
 ########################
 #2. Open data and provide summary statistics similar to those in table 1.
 
-#koira
+#institu1 = dummy for jewish institution
+#institu3 = dummy for jewish institution 1 block away
+
 
