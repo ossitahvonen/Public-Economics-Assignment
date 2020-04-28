@@ -68,7 +68,9 @@ data_pre <- data[data$mes<=12,]
 #and after
 data_post <- data[data$mes>12,]
 #3d
+#this currently produces wrong results
 lm(data = data_post, formula = totrob ~ institu1 + institu3 + twoblock + as.factor(mes))
+
 
 
 
