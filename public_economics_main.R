@@ -57,14 +57,12 @@ SD
 table(data$distanci)
 #new institu3
 institu3_new <- data$institu3-data$institu1
-table(data$institu1,data$institu3)
-table(data$institu1,data$institu3_new)
-
 names <- colnames(data)
 names <- append(c(names), c("institu3_neww"))
 data <- cbind(data,institu3_new)
 colnames(data) <- names
-
+table(data$institu1,data$institu3)
+table(data$institu1,data$institu3_new)
 #add dummy for 2 blocks to data 
 #ie. month fixed effect
 names <- colnames(data)
@@ -72,18 +70,35 @@ names <- append(c(names), c("twoblock"))
 data <- cbind(data, as.numeric(data$distanci==2))
 colnames(data) <- names
 
+#create the post variable
+post <- as.numeric(data$mes>7 & data$mes<50)
+data <- cbind(data,post)
+colnames(data) <- c(colnames(data)[1:15],"postt")
+
+#######################################
 ###block fixed effect should be done similarly
+#######################################
+#all variables created
+
+
+
+
+
+
 
 #months before the dramatic events when everyone was happy 
 data_pre <- data[data$mes<=7,]
 #and after
-data_post <- data[data$mes>7&data$mes<50,]
-data
+data_post <- data[data$mes>7 & data$mes<50,]
+
+
 #3d
 #this currently produces wrong results
 #not even close
-str(data)
-model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + as.factor(mes))
+apply(data,2,length)
+as.factor(data$mes)
+
+model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + I(mes))
 summary(model1)
 #we need Hubert-White SE:s also
 
@@ -94,9 +109,15 @@ data_close <- data_post[data_post$distanci<=2,]
 #create new totrob with month days..
 #[months 5,8,10,12] * 30/31
 #[7] * 30/17
-model2 <- lm(data = data_close, totrob ~ institu3_neww + institu1 + twoblock + as.factor())
+model2 <- lm(data = data_close, totrob ~ institu3_neww*postt + institu1*postt + twoblock*postt)
 
+totrob2 <- cbind(data$totrob,data$mes)
+totrob2 <- as.data.frame(totrob2)
+colnames(totrob2) <- c("a","b")
 
+totrob2[totrob2$b==5|totrob2$b==8|totrob2$b==10|totrob2$b==12,]
+totrob2[totrob2$b==5|totrob2$b==8|totrob2$b==10|totrob2$b==12,][,1] <- totrob2[totrob2$b==5|totrob2$b==8|totrob2$b==10|totrob2$b==12,][,1]*30/31
+totrob2[totrob2$b==5,]
 
 
 
