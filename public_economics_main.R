@@ -20,7 +20,6 @@ library(dplyr)
 library(ggplot2)
 library(stargazer)
 library(foreign)
-library(felm)
 #setting working directory to the right folder wrt github
 goalwd <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(goalwd)
@@ -100,7 +99,7 @@ data_post <- data[data$mes>7 & data$mes<50,]
 apply(data,2,length)
 as.factor(data$mes)
 
-model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + I(mes))
+model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + I(mes) - 1)
 summary(model1)
 #we need Hubert-White SE:s also
 
@@ -125,14 +124,13 @@ totrob2[totrob2$b==7,][,1] <- totrob2[totrob2$b==7,][,1]*30/17
 data$totrob_2 <- totrob2$a
 data[data$mes==7,]
 
-data_close <- data[data$institu1==1|data$institu3_neww==1|data$twoblock==1,]
-nrow(data_close)
+data_close <- data[data$distanci<3&data$mes < 50,]
+dim(data_close)
 
 
-
-model2 <- felm(data = data_close, totrob_2 ~ institu3_neww:postt + institu1:postt + twoblock:postt|observ)
+model2 <- lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt)
 summary(model2)
 
 #3A
-model3a <- lm(data = data, totrob2 ~ institu1 + postt + postt:institu1 + I(mes) + I(observ))
+model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes) )
 model3a
