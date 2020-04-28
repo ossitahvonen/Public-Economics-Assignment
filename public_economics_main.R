@@ -128,9 +128,9 @@ data_close <- data[data$distanci<3&data$mes < 50,]
 dim(data_close)
 
 
-model2 <- lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt)
+model2 <- lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt + I(observ) )
 summary(model2)
 
 #3A
-model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes) )
-model3a
+model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes))
+summary(model3a)
