@@ -26,7 +26,7 @@ setwd(goalwd)
 
 #load data (in same folder)
 data <- read.csv2("MonthlyPanel.csv", header = T)
-View(data)
+#View(data)
 ########################
 #2. Open data and provide summary statistics similar to those in table 1.
 
@@ -56,12 +56,14 @@ SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd
 #3d uses data after events
 table(data$distanci)
 #add dummy for 2 blocks to data 
+#ie. month fixed effect
 names <- colnames(data)
 names <- append(c(names), c("twoblock"))
 names
 data <- cbind(data, as.numeric(data$distanci==2))
-View(data)
 colnames(data) <- names
+
+###block fixed effect should be done similarly
 
 #months before the dramatic events when everyone was happy 
 data_pre <- data[data$mes<=12,]
@@ -69,6 +71,7 @@ data_pre <- data[data$mes<=12,]
 data_post <- data[data$mes>12,]
 #3d
 #this currently produces wrong results
+#not even close
 lm(data = data_post, formula = totrob ~ institu1 + institu3 + twoblock + as.factor(mes))
 
 
