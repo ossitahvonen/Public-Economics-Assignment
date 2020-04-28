@@ -43,37 +43,64 @@ data2 <- data %>% dplyr::select(distanci, edpub, estserv, banco,totrob, jewin)
 table <- cbind(apply(data2[data2$jewin==0,],2,mean),apply(data2[data2$jewin==1,],2,mean))[1:5,]
 table <- cbind(table,table[,1]-table[,2])
 colnames(table) <- c("Census tracts without Jewish institutions", "Census tracts with Jewish institutions", "Difference")
-
+table
 #saako standard deviationin jotenkin helposti mukaan taulukkoon?
 #xtable(table)
 #get standard deviations
 SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd))[1:5,]
-
+SD
 ######
 #
 
 
 #3d uses data after events
 table(data$distanci)
+#new institu3
+institu3_new <- data$institu3-data$institu1
+table(data$institu1,data$institu3)
+table(data$institu1,data$institu3_new)
+
+names <- colnames(data)
+names <- append(c(names), c("institu3_neww"))
+data <- cbind(data,institu3_new)
+colnames(data) <- names
+
 #add dummy for 2 blocks to data 
 #ie. month fixed effect
 names <- colnames(data)
 names <- append(c(names), c("twoblock"))
-names
 data <- cbind(data, as.numeric(data$distanci==2))
 colnames(data) <- names
 
 ###block fixed effect should be done similarly
 
 #months before the dramatic events when everyone was happy 
-data_pre <- data[data$mes<=12,]
+data_pre <- data[data$mes<=7,]
 #and after
-data_post <- data[data$mes>12,]
+data_post <- data[data$mes>7&data$mes<50,]
+data
 #3d
 #this currently produces wrong results
 #not even close
-lm(data = data_post, formula = totrob ~ institu1 + institu3 + twoblock + as.factor(mes))
-#we need Hubert-White SE:s
+str(data)
+model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + as.factor(mes))
+summary(model1)
+#we need Hubert-White SE:s also
+
+
+#3e
+#new data with only dist<=2 blocks
+data_close <- data_post[data_post$distanci<=2,]
+#create new totrob with month days..
+#[months 5,8,10,12] * 30/31
+#[7] * 30/17
+model2 <- lm(data = data_close, totrob ~ institu3_neww + institu1 + twoblock + as.factor())
+
+
+
+
+
+
 
 
 
