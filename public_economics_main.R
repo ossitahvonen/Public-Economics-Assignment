@@ -56,13 +56,19 @@ SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd
 #3d uses data after events
 table(data$distanci)
 #add dummy for 2 blocks to data 
+names <- colnames(data)
+names <- append(c(names), c("twoblock"))
+names
 data <- cbind(data, as.numeric(data$distanci==2))
+View(data)
+colnames(data) <- names
 
 #months before the dramatic events when everyone was happy 
 data_pre <- data[data$mes<=12,]
-
-
-
+#and after
+data_post <- data[data$mes>12,]
+#3d
+lm(data = data_post, formula = totrob ~ institu1 + institu3 + twoblock + as.factor(mes))
 
 
 
