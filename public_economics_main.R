@@ -73,6 +73,7 @@ data_post <- data[data$mes>12,]
 #this currently produces wrong results
 #not even close
 lm(data = data_post, formula = totrob ~ institu1 + institu3 + twoblock + as.factor(mes))
+#we need Hubert-White SE:s
 
 
 
