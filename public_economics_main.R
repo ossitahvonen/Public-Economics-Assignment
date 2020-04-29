@@ -7,7 +7,6 @@ rm(list=ls())
 #install.packages("ggplot2")
 #install.packages("stargazer")
 #install.packages("areg")
-install.packages("felm")
 
 ###1. A Ossi B Miia
 
@@ -15,11 +14,18 @@ install.packages("felm")
 
 #packages (install before!)
 library(MASS)
+#tibble etc
 library(tidyverse)
 library(dplyr)
+#plots
 library(ggplot2)
 library(stargazer)
+#statadata
 library(foreign)
+#robust SE:s
+library(lmtest)
+library(sandwich)
+
 #setting working directory to the right folder wrt github
 goalwd <- dirname(rstudioapi::getSourceEditorContext()$path)
 setwd(goalwd)
@@ -99,7 +105,7 @@ data_post <- data[data$mes>7 & data$mes<50,]
 apply(data,2,length)
 as.factor(data$mes)
 
-model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + I(mes) - 1)
+model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + I(mes) )
 summary(model1)
 #we need Hubert-White SE:s also
 
@@ -136,8 +142,8 @@ summary(model2)
 lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt)
 ###
 #tämä näyttäisi olevan oikein!!
-model3E <- lm(data = data_close, totrob_2 ~ institu1 + institu1:postt + institu3_neww + institu3_neww:postt + twoblock:postt)
-
+model3e <- lm(data = data_close, totrob_2 ~ institu1 + institu1:postt + institu3_neww + institu3_neww:postt + twoblock:postt)
+summary(model3e)
 
 #3A
 model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes))
