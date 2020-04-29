@@ -159,18 +159,28 @@ m3e$cse
 model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes))
 summary(model3a)
 
+data5 <- data[data$mes < 50,]
+m3a <- felm(data=data5, totrob ~ postt:institu1 | mes + observ)
+summary(m3a, robust = T)
+#oikein ja SE sama kuin paperissa
+
 #3B
 model3b <- lm(data = data[data$mes < 50,], totrob ~ institu1 + institu3_neww + postt + postt:institu1 + postt:institu3_neww + I(mes))
 summary(model3b)
 #oikein
+
+m3b <- felm(data=data5, totrob ~ postt:institu1 + postt:institu3_neww | mes + observ)
+summary(m3b, robust = T)
+#pyöristyksissä vähän ongelmaa, oneblock ja SE vikat desimaali ei täsmää paperiin, mutta lähellä
 
 #3C
 model3c <- lm(data = data[data$mes < 50,], totrob ~ institu1 + institu3_neww + twoblock + postt + postt:institu1 + postt:institu3_neww + postt:twoblock + I(mes))
 summary(model3c)
 #oikein!
 
-#SE:t vielÃ¤ vÃ¤Ã¤rin
-
+m3c <- felm(data=data5, totrob ~ postt:institu1 + postt:institu3_neww + postt:twoblock | mes + observ)
+summary(m3c, robust = T)
+#oneblock ja twoblock coeff. ja sameblock ja oneblock SE vikat desimaalit pyöristyy väärin
 
 
 
