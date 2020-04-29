@@ -92,14 +92,6 @@ data_post <- data[data$mes>7 & data$mes<50,]
 
 
 #3d
-#this currently produces wrong results
-#not even close
-apply(data,2,length)
-as.factor(data$mes)
-
-model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + I(mes) )
-summary(model1)
-#we need Hubert-White SE:s also
 
 #Näillä samat tulokset kuin esimerkissä ja robust errors 
 ## oneblock pyöristyy 0.011 ja paperissa 0.010, mutta en saanut millään eri tulosta 
@@ -111,9 +103,16 @@ coeftest(model1, vcov= vcovHC(model1, "HC1"))
 #3e
 #new data with only dist<=2 blocks
 data_close <- data_post[data_post$distanci<=2,]
-#create new totrob with month days..
-#[months 5,8,10,12] * 30/31
-#[7] * 30/17
+
+#create new totrob that takes month lengths into account
+#[months 5,8,10,12] * 30/31 & [7] * 30/17
+
+#Tällä pitäisi tulla samat kuin sun pitkässä versiossa
+## jätin kuitenkin pitkän talteen just in case 
+
+data$totrobc <- ifelse(data$mes==7, data$totrob*(30/17), data$totrob)
+data$totrobc2 <- ifelse(data$mes==5|data$mes==8|data$mes==10|data$mes==12,
+                        data$totrob*(30/31), data$totrobc)
 
 #new dataset
 totrob2 <- cbind(data$totrob,data$mes)
