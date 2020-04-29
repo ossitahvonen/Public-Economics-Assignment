@@ -134,8 +134,18 @@ summary(model2)
 #tämä ei toimi
 #muita kokeiluja:
 lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt)
+###
+#tämä näyttäisi olevan oikein!!
+model3E <- lm(data = data_close, totrob_2 ~ institu1 + institu1:postt + institu3_neww + institu3_neww:postt + twoblock:postt)
 
 
 #3A
 model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes))
 summary(model3a)
+
+#3B
+model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + postt:institu3_neww + I(mes))
+summary(model3a)
+
+
+
