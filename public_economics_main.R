@@ -144,8 +144,17 @@ model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:ins
 summary(model3a)
 
 #3B
-model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + postt:institu3_neww + I(mes))
-summary(model3a)
+model3b <- lm(data = data[data$mes < 50,], totrob ~ institu1 + institu3_neww + postt + postt:institu1 + postt:institu3_neww + I(mes))
+summary(model3b)
+#oikein
+
+#3C
+model3c <- lm(data = data[data$mes < 50,], totrob ~ institu1 + institu3_neww + twoblock + postt + postt:institu1 + postt:institu3_neww + postt:twoblock + I(mes))
+summary(model3c)
+#oikein!
+
+#SE:t vielä väärin
+
 
 
 
