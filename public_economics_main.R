@@ -63,24 +63,16 @@ SD
 #3d uses data after events
 table(data$distanci)
 #new institu3
-institu3_new <- data$institu3-data$institu1
-names <- colnames(data)
-names <- append(c(names), c("institu3_neww"))
-data <- cbind(data,institu3_new)
-colnames(data) <- names
+data$institu3_neww <- data$institu3-data$institu1
+
 table(data$institu1,data$institu3)
-table(data$institu1,data$institu3_new)
+table(data$institu1,data$institu3_neww)
 #add dummy for 2 blocks to data 
 #ie. month fixed effect
-names <- colnames(data)
-names <- append(c(names), c("twoblock"))
-data <- cbind(data, as.numeric(data$distanci==2))
-colnames(data) <- names
+data$twoblock <- ifelse(data$distanci==2,1,0)
 
 #create the post variable
-post <- as.numeric(data$mes>7 & data$mes<50)
-data <- cbind(data,post)
-colnames(data) <- c(colnames(data)[1:15],"postt")
+data$postt <- ifelse(data$mes>7 & data$mes<70,1,0)
 
 #######################################
 ###block fixed effect should be done similarly
