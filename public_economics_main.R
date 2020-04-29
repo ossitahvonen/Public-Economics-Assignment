@@ -127,9 +127,14 @@ data[data$mes==7,]
 data_close <- data[data$distanci<3&data$mes < 50,]
 dim(data_close)
 
-
-model2 <- lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt + I(observ) )
+#3e regression
+model2 <- lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt + I(observ))
 summary(model2)
+
+#tämä ei toimi
+#muita kokeiluja:
+lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt)
+
 
 #3A
 model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes))
