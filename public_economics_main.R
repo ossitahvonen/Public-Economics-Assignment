@@ -101,6 +101,12 @@ model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + two
 summary(model1)
 #we need Hubert-White SE:s also
 
+#Näillä samat tulokset kuin esimerkissä ja robust errors 
+## oneblock pyöristyy 0.011 ja paperissa 0.010, mutta en saanut millään eri tulosta 
+### ja Aliisallakin noin
+model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + as.factor(mes) )
+summary(model1)
+coeftest(model1, vcov= vcovHC(model1, "HC1"))
 
 #3e
 #new data with only dist<=2 blocks
