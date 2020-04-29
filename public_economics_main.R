@@ -7,6 +7,7 @@ rm(list=ls())
 #install.packages("ggplot2")
 #install.packages("stargazer")
 #install.packages("areg")
+#install.packages("lfe")
 
 ###1. A Ossi B Miia
 
@@ -25,6 +26,8 @@ library(foreign)
 #robust SE:s
 library(lmtest)
 library(sandwich)
+#fixed effects
+library(lfe)
 
 #setting working directory to the right folder wrt github
 goalwd <- dirname(rstudioapi::getSourceEditorContext()$path)
@@ -131,16 +134,26 @@ data_close <- data[data$distanci<3&data$mes < 50,]
 dim(data_close)
 
 #3e regression
-model2 <- lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt + I(observ))
-summary(model2)
 
-#tÃ¤mÃ¤ ei toimi
-#muita kokeiluja:
-lm(data = data_close, totrob_2 ~ institu1:postt + institu3_neww:postt + twoblock:postt)
-###
 #tÃ¤mÃ¤ nÃ¤yttÃ¤isi olevan oikein!!
 model3e <- lm(data = data_close, totrob_2 ~ institu1 + institu1:postt + institu3_neww + institu3_neww:postt + twoblock:postt)
 summary(model3e)
+
+#Näillä pitäisi saada clusterit lm modeliin, mutta ei ainakaan mulla toimi
+cluster.vcov(model3e,data$observ)
+vcovCL(model3e,cluster=data$observ)
+
+#tässä mun best effort SE:n kanssa
+m3e <- felm(data = data_close, totrob_2 ~ institu1:postt + 
+institu3_neww:postt +  twoblock:postt | observ | 0 | observ, cmethod ="cgm2")
+summary(m3e)
+m3e$cse
+# institu1:postt postt:institu3_neww      postt:twoblock 
+# 0.02341930          0.01463890          0.01073673 
+
+#pitäisi olla same block: (0.024293) 
+## one-block: (0.014186), two-block:(0.0108578)
+#eli lähellä, mutta niin kaukana
 
 #3A
 model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes))
