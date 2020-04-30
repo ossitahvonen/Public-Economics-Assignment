@@ -96,8 +96,8 @@ data_post <- data[data$mes>7 & data$mes<50,]
 
 #3d
 
-#Näillä samat tulokset kuin esimerkissä ja robust errors 
-## oneblock pyöristyy 0.011 ja paperissa 0.010, mutta en saanut millään eri tulosta 
+#N?ill? samat tulokset kuin esimerkiss? ja robust errors 
+## oneblock py?ristyy 0.011 ja paperissa 0.010, mutta en saanut mill??n eri tulosta 
 ### ja Aliisallakin noin
 model1 <- lm(data = data_post, formula = totrob ~ institu1 + institu3_neww + twoblock + as.factor(mes) )
 summary(model1)
@@ -110,8 +110,8 @@ data_close <- data_post[data_post$distanci<=2,]
 #create new totrob that takes month lengths into account
 #[months 5,8,10,12] * 30/31 & [7] * 30/17
 
-#Tällä pitäisi tulla samat kuin sun pitkässä versiossa
-## jätin kuitenkin pitkän talteen just in case 
+#T?ll? pit?isi tulla samat kuin sun pitk?ss? versiossa
+## j?tin kuitenkin pitk?n talteen just in case 
 
 data$totrobc <- ifelse(data$mes==7, data$totrob*(30/17), data$totrob)
 data$totrobc2 <- ifelse(data$mes==5|data$mes==8|data$mes==10|data$mes==12,
@@ -139,11 +139,11 @@ dim(data_close)
 model3e <- lm(data = data_close, totrob_2 ~ institu1 + institu1:postt + institu3_neww + institu3_neww:postt + twoblock:postt)
 summary(model3e)
 
-#Näillä pitäisi saada clusterit lm modeliin, mutta ei ainakaan mulla toimi
+#N?ill? pit?isi saada clusterit lm modeliin, mutta ei ainakaan mulla toimi
 cluster.vcov(model3e,data$observ)
 vcovCL(model3e,cluster=data$observ)
 
-#tässä mun best effort SE:n kanssa
+#t?ss? mun best effort SE:n kanssa
 m3e <- felm(data = data_close, totrob_2 ~ institu1:postt + 
 institu3_neww:postt +  twoblock:postt | observ | 0 | observ, cmethod ="cgm2")
 summary(m3e)
@@ -151,9 +151,9 @@ m3e$cse
 # institu1:postt postt:institu3_neww      postt:twoblock 
 # 0.02341930          0.01463890          0.01073673 
 
-#pitäisi olla same block: (0.024293) 
+#pit?isi olla same block: (0.024293) 
 ## one-block: (0.014186), two-block:(0.0108578)
-#eli lähellä, mutta niin kaukana
+#eli l?hell?, mutta niin kaukana
 
 #3A
 model3a <- lm(data = data[data$mes < 50,], totrob ~ institu1 + postt + postt:institu1 + I(mes))
@@ -171,7 +171,7 @@ summary(model3b)
 
 m3b <- felm(data=data5, totrob ~ postt:institu1 + postt:institu3_neww | mes + observ)
 summary(m3b, robust = T)
-#pyöristyksissä vähän ongelmaa, oneblock ja SE vikat desimaali ei täsmää paperiin, mutta lähellä
+#py?ristyksiss? v?h?n ongelmaa, oneblock ja SE vikat desimaali ei t?sm?? paperiin, mutta l?hell?
 
 #3C
 model3c <- lm(data = data[data$mes < 50,], totrob ~ institu1 + institu3_neww + twoblock + postt + postt:institu1 + postt:institu3_neww + postt:twoblock + I(mes))
@@ -180,7 +180,45 @@ summary(model3c)
 
 m3c <- felm(data=data5, totrob ~ postt:institu1 + postt:institu3_neww + postt:twoblock | mes + observ)
 summary(m3c, robust = T)
-#oneblock ja twoblock coeff. ja sameblock ja oneblock SE vikat desimaalit pyöristyy väärin
+#oneblock ja twoblock coeff. ja sameblock ja oneblock SE vikat desimaalit py?ristyy v??rin
+
+
+
+datamean_contr <- data[data$institu1==0,] %>% as.tibble() %>%
+  group_by(mes) %>%
+  summarise_at(vars(totrob),
+               list(name2 = mean, sdev2 = sd))
+
+
+datamean <- cbind(as.data.frame(datamean_contr),as.data.frame(datamean_treat[,2:3]))[1:9,]
+datamean
+
+
+
+p1 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
+  geom_point(colour = "red") + geom_line(colour = "red") +
+  geom_point(data = datamean, aes(x = mes, y = name2), colour = "blue") + 
+  geom_line(data = datamean, aes(x = mes, y = name2), colour = "blue") +
+  geom_errorbar(data = datamean, aes(ymin = name - sdev, ymax = name + sdev), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name2 - sdev2, ymax = name2 + sdev2), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_vline(xintercept = 7.5, linetype = 2) + 
+  xlab("Months") + ylab("Mean crime") +
+  theme(legend.position="bottom")
+
+#emojiplot
+p2 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
+  geom_emoji(emoji="1f388") + geom_line() +
+  geom_emoji(data = datamean, aes(x = mes, y = name2), emoji = "1f37e") + 
+  geom_line(data = datamean, aes(x = mes, y = name2), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name - sdev, ymax = name + sdev), width=.2, position=position_dodge(.9)) +
+  geom_errorbar(data = datamean, aes(ymin = name2 - sdev2, ymax = name2 + sdev2), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_vline(xintercept = 7.5, linetype = 2) + 
+  scale_color_gradientn(colours = rainbow(4)) +
+  xlab("Months") + ylab("Mean crime") +
+  theme(legend.position="bottom")
+
+
+p1
 
 
 
