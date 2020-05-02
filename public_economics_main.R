@@ -188,13 +188,14 @@ datamean_contr <- data[data$institu1==0,] %>% as.tibble() %>%
   group_by(mes) %>%
   summarise_at(vars(totrob),
                list(name2 = mean, sdev2 = sd))
-
+datamean_treat
 
 datamean <- cbind(as.data.frame(datamean_contr),as.data.frame(datamean_treat[,2:3]))[1:9,]
+datamean <-  cbind(datamean, datamean_contr[1:9,2] - datamean_treat[1:9,2])
+
+
+colnames(datamean) <- c("mes","name2", "sdev2", "name", "sdev", "dif")
 datamean
-
-
-
 p1 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
   geom_point(colour = "red") + geom_line(colour = "red") +
   geom_point(data = datamean, aes(x = mes, y = name2), colour = "blue") + 
@@ -204,6 +205,18 @@ p1 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
   geom_vline(xintercept = 7.5, linetype = 2) + 
   xlab("Months") + ylab("Mean crime") +
   theme(legend.position="bottom")
+
+#tässä kuvassa keskiarvojen erotus
+#keskivirheet vielä väärin
+
+p3 <- ggplot(data = datamean, aes(x=mes, y = dif)) +
+  geom_point(colour = "red") + geom_line(colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = dif - sdev2, ymax = dif + sdev2), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_vline(xintercept = 7.5, linetype = 2) + 
+  xlab("Months") + ylab("Mean crime") +
+  theme(legend.position="bottom")
+
+p3
 
 #emojiplot
 p2 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
@@ -219,6 +232,6 @@ p2 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
 
 
 p1
-
+p2
 
 
