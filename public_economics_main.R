@@ -35,7 +35,7 @@ setwd(goalwd)
 
 
 #load data (in same folder)
-#data <- read.csv2("MonthlyPanel.csv", header = T)
+data <- read.csv2("MonthlyPanel.csv", header = T)
 data <- read.dta("MonthlyPanel.dta")
 ########################
 #2. Open data and provide summary statistics similar to those in table 1.
@@ -182,8 +182,6 @@ m3c <- felm(data=data5, totrob ~ postt:institu1 + postt:institu3_neww + postt:tw
 summary(m3c, robust = T)
 #oneblock ja twoblock coeff. ja sameblock ja oneblock SE vikat desimaalit py?ristyy v??rin
 
-
-
 datamean_contr <- data[data$institu1==0,] %>% as.tibble() %>%
   group_by(mes) %>%
   summarise_at(vars(totrob),
@@ -192,22 +190,45 @@ datamean_treat
 
 datamean <- cbind(as.data.frame(datamean_contr),as.data.frame(datamean_treat[,2:3]))[1:9,]
 datamean <-  cbind(datamean, datamean_contr[1:9,2] - datamean_treat[1:9,2])
+#the correct values for the standard errors are sd/sqrt(n)
 
+n_contr <- nrow(data[data$institu1==0,])
+n_treat <- nrow(data[data$institu1==1,])
 
 colnames(datamean) <- c("mes","name2", "sdev2", "name", "sdev", "dif")
-datamean
 p1 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
   geom_point(colour = "red") + geom_line(colour = "red") +
   geom_point(data = datamean, aes(x = mes, y = name2), colour = "blue") + 
   geom_line(data = datamean, aes(x = mes, y = name2), colour = "blue") +
-  geom_errorbar(data = datamean, aes(ymin = name - sdev, ymax = name + sdev), width=.2, position=position_dodge(.9), colour = "red") +
-  geom_errorbar(data = datamean, aes(ymin = name2 - sdev2, ymax = name2 + sdev2), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_errorbar(data = datamean, aes(ymin = name - sdev/sqrt(n_treat), ymax = name + sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name2 - sdev2/sqrt(n_contr), ymax = name2 + sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
   geom_vline(xintercept = 7.5, linetype = 2) + 
   xlab("Months") + ylab("Mean crime") +
   theme(legend.position="bottom")
 
-#tässä kuvassa keskiarvojen erotus
-#keskivirheet vielä väärin
+#95% confidence intervals
+p12 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
+  geom_point(colour = "red") + geom_line(colour = "red") +
+  geom_point(data = datamean, aes(x = mes, y = name2), colour = "blue") + 
+  geom_line(data = datamean, aes(x = mes, y = name2), colour = "blue") +
+  geom_errorbar(data = datamean, aes(ymin = name - 1.96*sdev/sqrt(n_treat), ymax = name + 1.96*sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name2 - 1.96*sdev2/sqrt(n_contr), ymax = name2 + 1.96*sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_vline(xintercept = 7.5, linetype = 2) + 
+  xlab("Months") + ylab("Mean crime") +
+  theme(legend.position="bottom")
+
+#SE*6 (random number but close the the goal picture)
+p13 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
+  geom_point(colour = "red") + geom_line(colour = "red") +
+  geom_point(data = datamean, aes(x = mes, y = name2), colour = "blue") + 
+  geom_line(data = datamean, aes(x = mes, y = name2), colour = "blue") +
+  geom_errorbar(data = datamean, aes(ymin = name - 6*sdev/sqrt(n_treat), ymax = name + 6*sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name2 - 6*sdev2/sqrt(n_contr), ymax = name2 + 6*sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_vline(xintercept = 7.5, linetype = 2) + 
+  xlab("Months") + ylab("Mean crime") +
+  theme(legend.position="bottom")
+p12
+p13
 
 p3 <- ggplot(data = datamean, aes(x=mes, y = dif)) +
   geom_point(colour = "red") + geom_line(colour = "red") +
@@ -217,21 +238,4 @@ p3 <- ggplot(data = datamean, aes(x=mes, y = dif)) +
   theme(legend.position="bottom")
 
 p3
-
-#emojiplot
-p2 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
-  geom_emoji(emoji="1f388") + geom_line() +
-  geom_emoji(data = datamean, aes(x = mes, y = name2), emoji = "1f37e") + 
-  geom_line(data = datamean, aes(x = mes, y = name2), colour = "red") +
-  geom_errorbar(data = datamean, aes(ymin = name - sdev, ymax = name + sdev), width=.2, position=position_dodge(.9)) +
-  geom_errorbar(data = datamean, aes(ymin = name2 - sdev2, ymax = name2 + sdev2), width=.2, position=position_dodge(.9), colour = "red") +
-  geom_vline(xintercept = 7.5, linetype = 2) + 
-  scale_color_gradientn(colours = rainbow(4)) +
-  xlab("Months") + ylab("Mean crime") +
-  theme(legend.position="bottom")
-
-
-p1
-p2
-
 
