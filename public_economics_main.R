@@ -223,16 +223,18 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
   geom_point(aes(x=mes, y = name, color = "Treatment Group")) + geom_line(aes(x=mes, y = name, color = "Treatment Group")) +
   geom_point(aes(x = mes, y = name2, colour = "Control Group")) + 
   geom_line(data = datamean, aes(x = mes, y = name2, color = "Control Group")) +
-  geom_errorbar(data = datamean, aes(ymin = name - sdev/sqrt(n_treat), ymax = name + sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
-  geom_errorbar(data = datamean, aes(ymin = name2 - sdev2/sqrt(n_contr), ymax = name2 + sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_errorbar(data = datamean, aes(ymin = name - 1.96*sdev/sqrt(n_treat), ymax = name + 1.96*sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name2 - 1.96*sdev2/sqrt(n_contr), ymax = name2 + 1.96*sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
   geom_vline(xintercept = 7.5, linetype = 2) + 
   xlab("Months") + ylab("Mean crime") +
   theme(legend.position="bottom") +
-  labs(x = "Year",
-       y = "Mean Crime",
+  labs(x = "Months",
+       y = "Mean Crime, 95% CI",
        color = "Legend") +
   scale_color_manual(values = colors1)
 p1
+
+
 
 #95% confidence intervals
 p12 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
