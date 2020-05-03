@@ -37,6 +37,10 @@ setwd(goalwd)
 #load data (in same folder)
 data <- read.csv2("MonthlyPanel.csv", header = T)
 data <- read.dta("MonthlyPanel.dta")
+data==data2
+View(data2)
+data2[data2$totrob<1&data$totrob>0,]
+
 ########################
 #2. Open data and provide summary statistics similar to those in table 1.
 
@@ -141,13 +145,19 @@ summary(model3e)
 
 #N?ill? pit?isi saada clusterit lm modeliin, mutta ei ainakaan mulla toimi
 cluster.vcov(model3e,data$observ)
-vcovCL(model3e,cluster=data$observ)
+
+
+vcov1 <- vcovCL(model3e,cluster=data_close$observ)
 
 #t?ss? mun best effort SE:n kanssa
 m3e <- felm(data = data_close, totrob_2 ~ institu1:postt + 
 institu3_neww:postt +  twoblock:postt | observ | 0 | observ, cmethod ="cgm2")
 summary(m3e)
 m3e$cse
+
+coeftest(model3e, vcov. = vcov1)
+
+
 # institu1:postt postt:institu3_neww      postt:twoblock 
 # 0.02341930          0.01463890          0.01073673 
 
@@ -163,7 +173,6 @@ data5 <- data[data$mes < 50,]
 m3a <- felm(data=data5, totrob ~ postt:institu1 | mes + observ)
 summary(m3a, robust = T)
 #oikein ja SE sama kuin paperissa
-
 #3B
 model3b <- lm(data = data[data$mes < 50,], totrob ~ institu1 + institu3_neww + postt + postt:institu1 + postt:institu3_neww + I(mes))
 summary(model3b)
@@ -181,6 +190,10 @@ summary(model3c)
 m3c <- felm(data=data5, totrob ~ postt:institu1 + postt:institu3_neww + postt:twoblock | mes + observ)
 summary(m3c, robust = T)
 #oneblock ja twoblock coeff. ja sameblock ja oneblock SE vikat desimaalit py?ristyy v??rin
+
+vcovCL(model3c,cluster=data$observ[data$mes <50])
+
+
 
 datamean_contr <- data[data$institu1==0,] %>% as.tibble() %>%
   group_by(mes) %>%
