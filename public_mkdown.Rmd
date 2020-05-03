@@ -6,7 +6,7 @@ output: pdf_document
 ---
 
 
-###1. 
+###PART A 
 1. Read the macro study by Fölster and Henrekson (2001)
 A) Summarize the main econometric approach and the findings in the study.
 
@@ -29,4 +29,221 @@ It seems that there is, if the econometric approach is considered viable, a nega
 There is also need to note that the results of this research only concern the sample of relatively high-income countries. If one were to exrapolate the results to some lower income level countries, it could result in a problematic interpretation. The question can therefore be answered only on behalf the countries that represent the sample. In addition, the paper does not concern the structure of the public expenditure. The result does not therefore mean that all public spending is bad for economomic growth and some expenditure might be beneficial (for instance government actions in coronavirus situation).
 
 
-###2.
+2. Read the evaluation of the British Working Families' Tax Credit by Blundell et al. (2005).
+
+A) Summarize the main econometric approach and the findings in the study.
+
+The paper uses a difference-in-difference methodology to study the labour market effects of the Working Family Tax Credit (WFTC) reform that took place in 1999 in the United Kingdom. Families with children are the treatment group and similar families without children are the control group. The effects of the reform are identified from other underlying effects by subtracting the change in employment of the control group from the change in employment of the treatment group. The authors use a probit model which gives estimates of the effect the reforms had on labour market outcomes. The outcome variable is the employment status and the treatment variable is an interaction term between a post-reform indicator variable and a indicator variable on the presence of children. (NOLLAHYPOTEESI?) The number of children, the age of the youngest child, partner's employment status, general economic conditions, seasonal controls, age and education level are controlled for in order to address the possible average differences between groups. In addition, the phase-in and adjustment periods are dropped from the sample. 
+
+In addition to the WFTC, there were other contemporaneous reforms that affected the parents and the results give the combined effects of these reforms. The estimated results show a significant positive effect of 3.6 ppt on single mothers' employment, corresponding an estimated 60 000 new workers. The effect was larger with more and younger children and underestimated due to other reforms. For all mothers in couples, there was a statistically insignificant treatment effect of +0.4ppt.  There was however a significant effect of 2,6 ppt for those mothers whose partners were not employed. For single fathers, there was a positive and significant effect of 4.6ppt. For the fathers in couples, the treatment effect was statistically significant -0.5ppt and reforms increased employment rates of men whose partners were not working by +0.5ppt and reduced employment rates of men whose partners were working by -1.0ppt (vika omin sanoin + oliko significant?) 
+The robustness checks indicate the existence of additional underlying trends for couples that are not controlled for. Also, time and heterogenous effects are tested and suggest . 
+
+B) Compare the approach to the US studies on the EITC discussed in the class.
+
+Both studies study the extensive margin labour market responses due to a tax reform for families. In the US study, the control group are families without children and the treatment group are families with children. The only group that is studied in the US case are single mothers, while in the UK the study is extended to single fathers and parents in couples. Both studies also test different family sizes (katso tarkemmin miten blundellilla oli) and find heterogenous effects. Both studies use a difference-in-difference methodology with similar controls and treatment variables. In addition, Kleven studies multiple reforms. 
+
+C) How would you comment on the credibility of the research design? Are there significant threats to its identification strategy?
+
+
+###PART B
+
+1. Read the article.
+
+2. Open data and provide summary statistics similar to those in table 1. (2p.)
+
+```{r, message=FALSE, warning=FALSE}
+#packages
+library(MASS)
+#tibble etc
+library(tidyverse)
+library(dplyr)
+#tables
+library(xtable)
+#plots
+library(ggplot2)
+library(stargazer)
+#statadata
+library(foreign)
+#robust SE:s
+library(lmtest)
+library(sandwich)
+#fixed effects
+library(lfe)
+
+#data
+data <- read.dta("MonthlyPanel.dta")
+
+#new dummy that has 0 if no jewish institution in same or neighbouring block
+data$jewin <- as.numeric(data$institu1|data$institu3)
+
+#table
+data2 <- as.tibble(data)
+data2 <- data %>% dplyr::select(distanci, edpub, estserv, banco,totrob, jewin)
+table <- cbind(apply(data2[data2$jewin==0,],2,mean),apply(data2[data2$jewin==0,],2,sd),
+               apply(data2[data2$jewin==1,],2,mean), 
+               apply(data2[data2$jewin==1,],2,sd))[1:5,]
+table <- cbind(table,table[,1]-table[,3])
+
+colnames(table) <- c("Census tracts without Jewish institutions (A)",
+                     "SD(A)", "Census tracts with Jewish institutions (B)", "SD(B)",
+                     "Difference (C)=(A)-(B)")
+table1 <- xtable(table, caption="DEMOGRAPHIC CHARACTERISTICS OF CONTROL AND TREATMENT AREAS")
+
+```
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrrr}
+  \hline
+ & Census tracts without Jewish institutions (A) & SD(A) & Census tracts with Jewish institutions (B) & SD(B) & Difference (C)=(A)-(B) \\ 
+  \hline
+distanci & 3.66 & 1.83 & 0.81 & 0.39 & 2.84 \\ 
+  edpub & 0.03 & 0.17 & 0.05 & 0.21 & -0.02 \\ 
+  estserv & 0.02 & 0.15 & 0.02 & 0.12 & 0.01 \\ 
+  banco & 0.08 & 0.27 & 0.08 & 0.26 & 0.00 \\ 
+  totrob & 0.08 & 0.23 & 0.08 & 0.23 & 0.01 \\ 
+   \hline
+\end{tabular}
+\caption{DEMOGRAPHIC CHARACTERISTICS OF CONTROL AND TREATMENT AREAS} 
+\end{table}
+
+VIKAT SD PUUTTUUUUUUU!!!!!!!!!!!
+
+3. Replicate table 3. (3p.)
+
+In the data set, institu3 variable is 1 also when there is a protected institution in the same block (i.e. when institut1 = 1). Creating new institu3 variable that equals 1 only when institu1 is 0:
+```{r}
+data$institu3_neww <- data$institu3-data$institu1
+
+table(data$institu1,data$institu3)
+table(data$institu1,data$institu3_neww)
+```
+
+Creating new indicator variables for two-block distance from the nearest protected institution (twoblock) and for time after the terrorist attack (postt):
+```{r}
+data$twoblock <- ifelse(data$distanci==2,1,0)
+
+data$postt <- ifelse(data$mes>7 & data$mes<70,1,0)
+```
+
+Column A: The difference-in-difference estimator is 
+
+$$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} +M_t + F_i +\varepsilon_{it}$$
+where $Car \; Theft_{it}$ are the number of car thefts in block i for month i, $ Same \; Block \; Police_{it} $ is the interaction term between institu1 and postt (=the treatment variable), $M_t$ are the month fixed effects, $F_t$ are block fixed effects and $\varepsilon_{it}$ is the error term. Since block fixed effects are used, we use clustered standard errors. 
+
+Creating the treatment variables and dropping months 72 and 73:
+
+```{r}
+data$SameBlock <- data$institu1*data$postt
+data$OneBlock <- data$institu3_neww*data$postt
+data$TwoBlock <- data$twoblock*data$postt
+data <- data[data$mes < 70,]
+```
+
+Fixed effect regression (mes and observ as the fixed effects, clustering wrt. observ):
+
+```{r}
+m3a <- felm(data=data, totrob ~ SameBlock | mes + observ | 0 | observ)
+summary(m3a)
+```
+
+Column B: The difference-in-difference estimator is like in A, but now also includes a treatment variable for one-block distance (One-Block Police = institu3_neww*postt):
+
+$$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} +M_t + F_i +\varepsilon_{it}$$
+```{r}
+m3b <- felm(data=data, totrob ~ SameBlock + OneBlock | mes + observ | 0 | observ)
+summary(m3b)
+```
+
+Column C: Like in B, but adding a treatment variable for Two-Block Police (=twoblock*postt):
+
+$$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} + \alpha_2 Two\; Block\; Police_{it} + M_t + F_i +\varepsilon_{it}$$
+```{r}
+m3c <- felm(data=data, totrob ~ SameBlock + OneBlock + TwoBlock | mes + observ | 0 | observ)
+summary(m3c)
+```
+
+Column D: The cross section regression uses data only from after the terrorist attack and doesn't include block-fixed effects:
+
+$$Car \; Theft_{it} = \beta_0 + \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} + \alpha_2 Two\; Block\; Police_{it} + M_t +\varepsilon_{it}$$
+Now $Same \; Block \; Police_{it}, \; One \; Block \; Police_{it}$ and $Two\; Block\; Police_{it}$ have not been interacted with the post variable, since data is only from when postt=1. We use robust standard errors. 
+
+```{r}
+data_post <- data[data$mes>7,]
+data_post$SameBlock <- data_post$institu1
+data_post$OneBlock <- data_post$institu3_neww
+data_post$TwoBlock <- data_post$twoblock
+model3d <- lm(data = data_post, formula = totrob ~ SameBlock + OneBlock + TwoBlock +
+                as.factor(mes))
+summary(model3d)
+```
+
+Robust standard errors: 
+```{r}
+coeftest(model3d, vcov= vcovHC(model3d, "HC1"))
+```
+
+Column E: The time-series regression only uses data from the Jewish blocks (up to two block distance): 
+
+$$Car \; Theft_{it} = \beta_0 + \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} + \alpha_2 Two\; Block\; Police_{it} + F_i +\varepsilon_{it}$$
+Also the different lengths of the months are taken into account in the new totrob2 variable: 
+
+```{r}
+data$totrobc <- ifelse(data$mes==7, data$totrob*(30/17), data$totrob)
+data$totrob2 <- ifelse(data$mes==5|data$mes==8|data$mes==10|data$mes==12,
+                        data$totrob*(30/31), data$totrobc)
+```
+
+Regression using clustered standard errors: 
+```{r}
+data_close <- data[data$distanci<3,]
+m3e <- felm(data = data_close, totrob2 ~ SameBlock+OneBlock+TwoBlock | observ | 0 | observ) 
+summary(m3e)
+```
+
+Collecting the results: 
+
+```{r, message=FALSE, warning=FALSE}
+stargazer(m3a,m3b, m3c, model3d, m3e, column.separate=c(3,1,1), 
+          column.labels=c("Difference-in-difference","Cross section"," Time series"),
+          dep.var.labels.include = FALSE, dep.var.caption = "", model.names = FALSE,
+          summary.stat = c("sd"),  title = "THE EFFECT OF POLICE PRESENCE ON CAR THEFT",
+          keep = c("SameBlock", "OneBlock","TwoBlock"), label = "3",
+          keep.stat = c("n", "rsq") )
+```
+
+(fixing the robust standard errors for column D by hand)
+
+\begin{table}[!htbp] \centering 
+  \caption{THE EFFECT OF POLICE PRESENCE ON CAR THEFT} 
+  \label{3} 
+\begin{tabular}{@{\extracolsep{5pt}}lccccc} 
+\\[-1.8ex]\hline 
+\hline \\[-1.8ex] 
+ & \multicolumn{3}{c}{Difference-in-difference} & Cross section &  Time series \\ 
+\\[-1.8ex] & (1) & (2) & (3) & (4) & (5)\\ 
+\hline \\[-1.8ex] 
+ SameBlock & $-$0.078$^{***}$ & $-$0.080$^{***}$ & $-$0.081$^{***}$ & $-$0.073$^{***}$ & $-$0.058$^{**}$ \\ 
+  & (0.023) & (0.024) & (0.024) & (0.011) & (0.023) \\ 
+  & & & & & \\ 
+ OneBlock &  & $-$0.013 & $-$0.014 & $-$0.012 & $-$0.00005 \\ 
+  &  & (0.015) & (0.015) & (0.011) & (0.015) \\ 
+  & & & & & \\ 
+ TwoBlock &  &  & $-$0.002 & $-$0.003 & 0.017 \\ 
+  &  &  & (0.012) & (0.009) & (0.011) \\ 
+  & & & & & \\ 
+\hline \\[-1.8ex] 
+Observations & 7,884 & 7,884 & 7,884 & 4,380 & 3,816 \\ 
+R$^{2}$ & 0.198 & 0.198 & 0.198 & 0.004 & 0.189 \\ 
+\hline 
+\hline \\[-1.8ex] 
+\textit{Note:}  & \multicolumn{5}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+\end{tabular} 
+\end{table} 
+
+4. Plot a figure of choice describing the DID-effects. (2p.)
+5. Discuss the results. (3p.)
+a. What do the estimation results in table 3 tell?
+b. What are the potential concerns in the research set up?
+c. What do we learn from the paper? Discuss the internal and external validity of the study.
+
