@@ -242,8 +242,62 @@ R$^{2}$ & 0.198 & 0.198 & 0.198 & 0.004 & 0.189 \\
 \end{table} 
 
 4. Plot a figure of choice describing the DID-effects. (2p.)
+
+```{r, results=F}
+datamean_treat <- data[data$institu1==1,] %>% as.tibble() %>%
+  group_by(mes) %>%
+  summarise_at(vars(totrob),
+               list(name2 = mean, sdev2 = sd))
+
+datamean_contr <- data[data$institu1==0,] %>% as.tibble() %>%
+  group_by(mes) %>%
+  summarise_at(vars(totrob),
+               list(name2 = mean, sdev2 = sd))
+datamean_treat
+
+datamean <- cbind(as.data.frame(datamean_contr),as.data.frame(datamean_treat[,2:3]))[1:9,]
+datamean <-  cbind(datamean, datamean_contr[1:9,2] - datamean_treat[1:9,2])
+#the correct values for the standard errors are sd/sqrt(n)
+
+n_contr <- nrow(data[data$institu1==0,])
+n_treat <- nrow(data[data$institu1==1,])
+
+colnames(datamean) <- c("mes","name2", "sdev2", "name", "sdev", "dif")
+
+
+colors1 <- c("Treatment Group" = "red", "Control Group" = "blue")
+
+p1 <- ggplot(data = datamean, aes(x=mes)) +
+  geom_point(aes(x=mes, y = name, color = "Treatment Group")) + geom_line(aes(x=mes, y = name, color = "Treatment Group")) +
+  geom_point(aes(x = mes, y = name2, colour = "Control Group")) + 
+  geom_line(data = datamean, aes(x = mes, y = name2, color = "Control Group")) +
+  geom_errorbar(data = datamean, aes(ymin = name - 1.96*sdev/sqrt(n_treat), ymax = name + 1.96*sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name2 - 1.96*sdev2/sqrt(n_contr), ymax = name2 + 1.96*sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_vline(xintercept = 7.5, linetype = 2) + 
+  xlab("Months") + ylab("Mean crime") +
+  theme(legend.position="bottom") +
+  labs(x = "Months",
+       y = "Mean Crime, 95% CI",
+       color = "Legend") +
+  scale_color_manual(values = colors1)
+
+```
+
+```{r}
+p1
+```
 5. Discuss the results. (3p.)
 a. What do the estimation results in table 3 tell?
+
+There are statistically significant effects for the Police on the same block across all specifications. 
+
+Instead, the coefficients for the other police presence variables are not statistically significantly different from zero in any regressions. 
+
+
+
 b. What are the potential concerns in the research set up?
+
+Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption.
+
 c. What do we learn from the paper? Discuss the internal and external validity of the study.
 
