@@ -63,6 +63,9 @@ table
 #get standard deviations
 SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd))[1:5,]
 SD
+
+
+
 ######
 #
 
@@ -193,7 +196,10 @@ summary(m3c, robust = T)
 
 vcovCL(model3c,cluster=data$observ[data$mes <50])
 
-
+datamean_treat <- data[data$institu1==1,] %>% as.tibble() %>%
+  group_by(mes) %>%
+  summarise_at(vars(totrob),
+               list(name2 = mean, sdev2 = sd))
 
 datamean_contr <- data[data$institu1==0,] %>% as.tibble() %>%
   group_by(mes) %>%
@@ -209,15 +215,24 @@ n_contr <- nrow(data[data$institu1==0,])
 n_treat <- nrow(data[data$institu1==1,])
 
 colnames(datamean) <- c("mes","name2", "sdev2", "name", "sdev", "dif")
-p1 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
-  geom_point(colour = "red") + geom_line(colour = "red") +
-  geom_point(data = datamean, aes(x = mes, y = name2), colour = "blue") + 
-  geom_line(data = datamean, aes(x = mes, y = name2), colour = "blue") +
+
+
+colors1 <- c("Treatment Group" = "red", "Control Group" = "blue")
+
+p1 <- ggplot(data = datamean, aes(x=mes)) +
+  geom_point(aes(x=mes, y = name, color = "Treatment Group")) + geom_line(aes(x=mes, y = name, color = "Treatment Group")) +
+  geom_point(aes(x = mes, y = name2, colour = "Control Group")) + 
+  geom_line(data = datamean, aes(x = mes, y = name2, color = "Control Group")) +
   geom_errorbar(data = datamean, aes(ymin = name - sdev/sqrt(n_treat), ymax = name + sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
   geom_errorbar(data = datamean, aes(ymin = name2 - sdev2/sqrt(n_contr), ymax = name2 + sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
   geom_vline(xintercept = 7.5, linetype = 2) + 
   xlab("Months") + ylab("Mean crime") +
-  theme(legend.position="bottom")
+  theme(legend.position="bottom") +
+  labs(x = "Year",
+       y = "Mean Crime",
+       color = "Legend") +
+  scale_color_manual(values = colors1)
+p1
 
 #95% confidence intervals
 p12 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
@@ -229,7 +244,7 @@ p12 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
   geom_vline(xintercept = 7.5, linetype = 2) + 
   xlab("Months") + ylab("Mean crime") +
   theme(legend.position="bottom")
-
+p12
 #SE*6 (random number but close the the goal picture)
 p13 <- ggplot(data = datamean, aes(x=mes, y = name, color = mes)) +
   geom_point(colour = "red") + geom_line(colour = "red") +
