@@ -58,12 +58,15 @@ table <- cbind(apply(data2[data2$jewin==0,],2,mean),apply(data2[data2$jewin==1,]
 table <- cbind(table,table[,1]-table[,2])
 colnames(table) <- c("Census tracts without Jewish institutions", "Census tracts with Jewish institutions", "Difference")
 table
+
 #saako standard deviationin jotenkin helposti mukaan taulukkoon?
 #xtable(table)
 #get standard deviations
 SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd))[1:5,]
 SD
 
+t.test(data2[data2$jewin==0,]$edpub,data2[data2$jewin==1,]$edpub)
+t.test(data2[data2$jewin==0,]$banco,data2[data2$jewin==1,]$banco)
 
 
 ######
