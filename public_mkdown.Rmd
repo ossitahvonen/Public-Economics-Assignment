@@ -304,7 +304,7 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
 
 
 
-```{r}
+```{r, out.width="90%"}
 p1
 ```
 
