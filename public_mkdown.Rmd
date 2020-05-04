@@ -256,7 +256,6 @@ R$^{2}$ & 0.198 & 0.198 & 0.198 & 0.004 & 0.189 \\
 
 The estimates in this regression have been rounded and the precise summaries can be found in the Appendix.
 
-
 4. Plot a figure of choice describing the DID-effects. (2p.)
 
 ```{r, results=F}
@@ -294,11 +293,14 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
   xlab("Months") + ylab("Mean crime") +
   theme(legend.position="bottom") +
   labs(x = "Months",
-       y = "Mean Car Theft per month, 95% CI",
+       y = "Mean Car Theft",
        color = "Legend") +
-  scale_color_manual(values = colors1)
+  scale_color_manual(values = colors1) +
+  ggtitle("Mean monthly car thefts by group with 95% CI")
 
 ```
+
+
 
 ```{r}
 p1
@@ -425,12 +427,15 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
   xlab("Months") + ylab("Mean crime") +
   theme(legend.position="bottom") +
   labs(x = "Months",
-       y = "Mean Crime, 95% CI",
+       y = "Mean car theft",
        color = "Legend") +
-  scale_color_manual(values = colors1)
+  scale_color_manual(values = colors1)+
+  ggtitle("Mean monthly car thefts by group with 95% CI")
 
 ```
 Figure with the ".xls" -file. Notable there are some differences reflecting the differences in the datasets. The code is similar to the code for the other graph and is not shown.
+
+
 
 ```{r, echo=FALSE}
 p1
