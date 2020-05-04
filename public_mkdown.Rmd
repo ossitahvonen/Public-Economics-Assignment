@@ -302,7 +302,7 @@ b. What are the potential concerns in the research set up?
 
 Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. There is no statistical test for this assumption. It can be assessed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. The trends seem to be somewhat parellel before the treatment. This is required for the control group to provide a credible counterfactual to treatment.
 
-The authors also explore the possibility that there were other simultaneous treatments in addition to the increase in police presence, such as parking restrictions. They present evidence that this alone can not explain the change in car thefts.
+The authors also explore the possibility that there were other simultaneous treatments in addition to the increase in police presence, such as parking restrictions. They present evidence that this alone can not explain the change in car thefts. They also examine the chance that people (drivers or criminals) adjusted their behaviour because of fear and this caused the reduction in thefts instead of the police presence. They find no evidence of short effects like this, which still leaves the possibility of the effect being longer than the data
 
 
 c. What do we learn from the paper? Discuss the internal and external validity of the study.
