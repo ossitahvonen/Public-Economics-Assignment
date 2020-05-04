@@ -241,6 +241,9 @@ R$^{2}$ & 0.198 & 0.198 & 0.198 & 0.004 & 0.189 \\
 \end{tabular} 
 \end{table} 
 
+
+
+
 4. Plot a figure of choice describing the DID-effects. (2p.)
 
 ```{r, results=F}
@@ -291,13 +294,19 @@ a. What do the estimation results in table 3 tell?
 
 There are statistically significant effects for the Police on the same block across all specifications. 
 
-Instead, the coefficients for the other police presence variables are not statistically significantly different from zero in any regressions. 
+Instead, the coefficients for the other police presence variables are not statistically significantly different from zero in any regressions. They can be observed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. 
 
 
 
 b. What are the potential concerns in the research set up?
 
-Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption.
+Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. There is no statistical test for this assumption.
 
 c. What do we learn from the paper? Discuss the internal and external validity of the study.
+
+
+##References
+
+
+
 
