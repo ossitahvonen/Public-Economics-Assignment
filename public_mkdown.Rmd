@@ -12,7 +12,7 @@ A) Summarize the main econometric approach and the findings in the study.
 
 The authors use combined cross-section time series regressions with 5-year periods. They exploit within country variation to increase the efficiency. They use controls for periods and countries to get rid of short term endogeneity problems (caused by business cycles) and to allow for country specific production functions. They also report regressions using 2SLS (i.e. instrumental variables) to control for business cycles. The problem of selection on the OECD countries is controlled by running regressions with additional data set of more countries. The researchers correct for heteroscedasticity between countries. 
 
-The paper finds significant negative effects between government expenditure and economic growth. A 10% increase in expenditure ratio is associated with a 0.7-0.8 % lower growth. There are no significant effects for taxes found. These effects persist in first differences regressions, using lagged variables as instruments and with additional country data. SAVINGS ROBUSTNESS
+The paper finds significant negative effects between government expenditure and economic growth. A 10% increase in expenditure ratio is associated with a 0.7-0.8 % lower growth. There are no significant effects for taxes found. These effects persist in first differences regressions, using lagged variables as instruments and with additional country data.
 
 The robustness tests show that the effect of government expenditure is more robust than the effect of the taxes. Neither is robust by the strict definition of the extreme bounds analysis.
 
@@ -176,7 +176,6 @@ Column B: The difference-in-difference estimator is like in A, but now also incl
 $$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} +M_t + F_i +\varepsilon_{it}$$
 ```{r}
 m3b <- felm(data=data, totrob ~ SameBlock + OneBlock | mes + observ | 0 | observ)
-summary(m3b)
 ```
 
 Column C: Like in B, but adding a treatment variable for Two-Block Police (=twoblock*postt):
@@ -184,7 +183,7 @@ Column C: Like in B, but adding a treatment variable for Two-Block Police (=twob
 $$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} + \alpha_2 Two\; Block\; Police_{it} + M_t + F_i +\varepsilon_{it}$$
 ```{r}
 m3c <- felm(data=data, totrob ~ SameBlock + OneBlock + TwoBlock | mes + observ | 0 | observ)
-summary(m3c)
+
 ```
 
 Column D: The cross section regression uses data only from after the terrorist attack and doesn't include block-fixed effects:
@@ -199,7 +198,7 @@ data_post$OneBlock <- data_post$institu3_neww
 data_post$TwoBlock <- data_post$twoblock
 model3d <- lm(data = data_post, formula = totrob ~ SameBlock + OneBlock + TwoBlock +
                 as.factor(mes))
-summary(model3d)
+
 ```
 
 Robust standard errors: 
@@ -222,7 +221,7 @@ Regression using clustered standard errors:
 ```{r}
 data_close <- data[data$distanci<3,]
 m3e <- felm(data = data_close, totrob2 ~ SameBlock+OneBlock+TwoBlock | observ | 0 | observ) 
-summary(m3e)
+
 ```
 
 Collecting the results: 
@@ -265,7 +264,7 @@ R$^{2}$ & 0.198 & 0.198 & 0.198 & 0.004 & 0.189 \\
 \end{tabular} 
 \end{table} 
 
-
+The estimates in this regression have been rounded and the precise summaries can be found in the Appendix.
 
 
 4. Plot a figure of choice describing the DID-effects. (2p.)
@@ -351,8 +350,98 @@ Important question regarding the validity is the chance that crime simply switch
 ## References
 
 ## Appendix
+ 
+ 
+###1.
+Summaries of the regressions in Table 3. 
 
-Summaries of the regressions
+
 ```{r}
 summary(m3a)
+summary(m3b)
+summary(m3c)
+summary(model3d)
+summary(m3e)
+```
+
+###2. 
+
+```{r, include=FALSE}
+data <- read.csv2("MonthlyPanel.csv", header = T)
+#data <- read.dta("MonthlyPanel.dta")
+
+
+########################
+#2. Open data and provide summary statistics similar to those in table 1.
+
+#institu1 = dummy for jewish institution
+#institu3 = dummy for jewish institution 1 block away
+
+#new dummy that has 0 if no jewish institution in same or neighbouring block
+jewin <- as.numeric(data$institu1|data$institu3)
+data <- cbind(data,jewin)
+#table
+#(hieman hankala tapa tehdä)
+data2 <- as.tibble(data)
+data2 <- data %>% dplyr::select(distanci, edpub, estserv, banco,totrob, jewin)
+table <- cbind(apply(data2[data2$jewin==0,],2,mean),apply(data2[data2$jewin==1,],2,mean))[1:5,]
+table <- cbind(table,table[,1]-table[,2])
+colnames(table) <- c("Census tracts without Jewish institutions", "Census tracts with Jewish institutions", "Difference")
+table
+
+
+
+#new institu3
+data$institu3_neww <- data$institu3-data$institu1
+
+
+#ie. month fixed effect
+data$twoblock <- ifelse(data$distanci==2,1,0)
+
+#create the post variable
+data$postt <- ifelse(data$mes>7 & data$mes<70,1,0)
+
+
+datamean_treat <- data[data$institu1==1,] %>% as.tibble() %>%
+  group_by(mes) %>%
+  summarise_at(vars(totrob),
+               list(name2 = mean, sdev2 = sd))
+
+datamean_contr <- data[data$institu1==0,] %>% as.tibble() %>%
+  group_by(mes) %>%
+  summarise_at(vars(totrob),
+               list(name2 = mean, sdev2 = sd))
+datamean_treat
+
+datamean <- cbind(as.data.frame(datamean_contr),as.data.frame(datamean_treat[,2:3]))[1:9,]
+datamean <-  cbind(datamean, datamean_contr[1:9,2] - datamean_treat[1:9,2])
+#the correct values for the standard errors are sd/sqrt(n)
+
+n_contr <- nrow(data[data$institu1==0,])
+n_treat <- nrow(data[data$institu1==1,])
+
+colnames(datamean) <- c("mes","name2", "sdev2", "name", "sdev", "dif")
+
+
+colors1 <- c("Treatment Group" = "red", "Control Group" = "blue")
+
+p1 <- ggplot(data = datamean, aes(x=mes)) +
+  geom_point(aes(x=mes, y = name, color = "Treatment Group")) + geom_line(aes(x=mes, y = name, color = "Treatment Group")) +
+  geom_point(aes(x = mes, y = name2, colour = "Control Group")) + 
+  geom_line(data = datamean, aes(x = mes, y = name2, color = "Control Group")) +
+  geom_errorbar(data = datamean, aes(ymin = name - 1.96*sdev/sqrt(n_treat), ymax = name + 1.96*sdev/sqrt(n_treat)), width=.2, position=position_dodge(.9), colour = "red") +
+  geom_errorbar(data = datamean, aes(ymin = name2 - 1.96*sdev2/sqrt(n_contr), ymax = name2 + 1.96*sdev2/sqrt(n_contr)), width=.2, position=position_dodge(.9), colour = "blue") +
+  geom_vline(xintercept = 7.5, linetype = 2) + 
+  xlab("Months") + ylab("Mean crime") +
+  theme(legend.position="bottom") +
+  labs(x = "Months",
+       y = "Mean Crime, 95% CI",
+       color = "Legend") +
+  scale_color_manual(values = colors1)
+
+```
+Figure with the ".xls" -file. Notable there are some differences reflecting the differences in the datasets.
+
+```{r}
+p1
 ```

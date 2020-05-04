@@ -36,7 +36,7 @@ setwd(goalwd)
 
 #load data (in same folder)
 data <- read.csv2("MonthlyPanel.csv", header = T)
-data <- read.dta("MonthlyPanel.dta")
+#data <- read.dta("MonthlyPanel.dta")
 data==data2
 View(data2)
 data2[data2$totrob<1&data$totrob>0,]
