@@ -38,26 +38,23 @@ There is also need to note that the results of this research only concern the sa
 
 A) Summarize the main econometric approach and the findings in the study.
 
-Blundell et al. use a probit difference-in-difference model to study the extensive margin labour market effects of the Working Family Tax Credit (WFTC) reform in the UK. The reform affected only families with children, and in order to identify its effects, families with children are considered as a treatment group and similar families without children as the control group. The control group is assumed to reflect the other underlying effects, and hence the changes in the control group's employment are removed from the changes of the treatment group's employment for identification. The treatment variable equals 1 if the observation takes place after the reform and the family has children at the time, and 0 otherwise.  In order to address the average differences between groups, some observable individual and macro-level conditions, such as the number of children, the age of the youngest child, partner's employment status and general economic conditions, are controlled for. In addition, the phase-in and adjustment periods are dropped from the sample. There were other reforms that affected parents during the sample period, so the effects of WFTC cannot be identified from these other reforms. 
+Blundell et al. use a probit difference-in-difference model to study the extensive margin labour market effects of the Working Family Tax Credit (WFTC) reform in the UK. The reform affected only families with children, and in order to identify its effects, families with children are considered as a treatment group and similar families without children as the control group. The control group is assumed to reflect the other underlying effects, and hence the changes in the control group's employment are removed from the changes of the treatment group's employment for identification. The treatment variable equals 1 if the observation takes place after the reform and the family has children at the time, and 0 otherwise.  In order to address the average differences between groups, some observable individual and macro-level conditions, , namely the number of children, the age of the youngest child, partner's employment status, general economic conditions, seasonal controls, age and education level, are controlled for. In addition, the phase-in and adjustment periods are dropped from the sample. There were other reforms that affected parents during the sample period, so the effects of WFTC cannot be identified from these other reforms. 
 
-The effects are identified for single mothers, single fathers, mothers in couples and fathers in couples. The estimated results show a significant positive treatment effect of 3.6 ppt on single mothers' employment and the effect was stronger with more and younger children. For all mothers in couples, the treatment effect was insignificant (+0.4ppt). There was however a significant effect of 2,6 ppt for those mothers whose partners were not employed. For single fathers, there was a positive and significant effect of 4.6ppt. For the fathers in couples, the treatment effect was statistically significant -0.5ppt. The effect for fathers in couples was stronger when their partners were working. There is some evidence on the effects decreasing over time and heterogenous effects for couples with young children. The robustness checks indicate the existence of additional underlying trends for couples that are not controlled for. In total the estimated effects correspond 25,000-59,000 new workers, from which the single mothers' share was around 60,000. 
-
-
- 
+The effects are identified for single mothers, single fathers, mothers in couples and fathers in couples. The estimated results show a significant positive treatment effect of 3.6 ppt on single mothers' employment and the effect was stronger with more and younger children. For all mothers in couples, the treatment effect was insignificant (+0.4ppt). There was however a significant effect of 2,6 ppt for those mothers whose partners were not employed. For single fathers, there was a positive and significant effect of 4.6ppt. For the fathers in couples, the treatment effect was statistically significant -0.5ppt. The effect for fathers in couples was stronger when their partners were working. There is some evidence on the effects decreasing over time and heterogenous effects for couples with young children. The robustness checks indicate the existence of additional underlying trends for couples that are not controlled for. In total, the estimated effects correspond 25,000-59,000 new workers, from which the single mothers' share was around 60,000. 
 
 B) Compare the approach to the US studies on the EITC discussed in the class.
 
 Both studies study the extensive margin labour market responses of tax reforms with a similar ex-post difference-in-difference approach. The tax reforms in both countries affected families with children and both studies use families with similar characteristics but without children as control groups. However, the US study only studies single mothers, while the UK study also includes fathers and couples. 
 	
-The control and treatment variables used in the UK paper are also used in the US paper, but the US study also includes more extensive analysis of the confounding factors. While the UK study examines the employment trends of the treatment and control groups close to the reform, the US study also analyses the long-term employment trends of the groups. The US study also studies multiple tax reforms which provides evidence on the overestimation of the effects. In addition, multiple extensive margin estimates are considered in addition to the employment status.
-
+The main difference between the two studies is that the US study studies multiple tax reforms over a long time period and its analysis is hence more extensive. In addition, the control and treatment variables used in the UK paper are similar in the US paper, but the US study also includes more extensive analysis of the confounding factors. While the UK study examines the employment trends of the treatment and control groups close to the reform, the US study also analyses the long-term employment trends of the groups. Finally, the US study considers multiple extensive margin estimates  in addition to the employment status that was the output variable in the UK WFTC study.
 
 C) How would you comment on the credibility of the research design? Are there significant threats to its identification strategy?
 
-The difference-in-difference identification strategy assumes that the control and the treatment groups experience common time effects and that there are no composition changes within the groups. Besides single women, the other treatment and control groups experienced very similar employment trend before and after the reform, so the common time effect assumption seems credible. However, as was also noted in the paper, the employment trend of the single mothers had already started to converge before the reform took place, so this could present one threat for the identification strategy. In addition, the employment levels of the individuals without children were very high in general, so the extent to which they can respond to good economic conditions might not correspond the real macro effects the treatment group experienced. 
-	
-As was also stated in the paper, there were also other contemporaneous reforms affecting the parents, so the common time trend assumption is not satisfied in this case and the results hence show the combined effects of all of these reforms. Underestimation for mothers, uncertainty about others. The controls address the average differences between the groups and hence the common shock assumption. Robustness checks give evidence on the satisfaction of the common trend assumption for single parents. For the couples, the robustness checks indicate some underlying trends that were not controlled for. In summary, the identification strategy seems rather credible when the interpretation of results take some of its weaknesses into account (combined effects, couples). 
+The difference-in-difference identification strategy assumes that the control and the treatment groups experience common time effects and that there are no composition changes within the groups. Besides single women, the other treatment and control groups experienced very similar employment trend before and after the reform, so the common trend assumption seems credible. However, as was also noted in the paper, the employment trend of the single mothers had already started to converge before the reform took place, so this could present one threat for the identification strategy. In addition, the employment levels of the individuals without children were very high in general, so the extent to which they can respond to good economic conditions might not fully correspond the real macro effects the treatment group experienced during the reform. 
 
+Another concern for the identification is the presence of other reforms. As was stated in the paper, also other contemporaneous reforms affected parents in addition to the WFTC. Therefore, the common time trend assumption is not satisfied in this respect and the results show the combined effects of all these reforms. The authors conclude that this results in underestimation of the WFTC effects for single mothers and that there is uncertainty about the direction of the bias for other groups.
+
+The control variables in the estimation address the possibility of average differences between the groups. Robustness checks show evidence on the satisfaction of the identification assumptions for single parents. For the couples, the robustness checks indicate some underlying trends that were not controlled for. In summary, the identification strategy has some weaknesses, notably for parents in couples, but if these are taken into account when interpreting the results, the research design is rather credible. 
 
 ###PART B
 
@@ -125,7 +122,7 @@ distanci & 3.66 & 1.83 & 0.81 & 0.39 & 2.84 & < 2.2e-16\\
 \caption{DEMOGRAPHIC CHARACTERISTICS OF CONTROL AND TREATMENT AREAS} 
 \end{table}
 
-The values reported in the column 6 are p-values from Welch two-sample t-test for equal means with 2 sided alternative hypothesis. A small p-value therefore means that the null can be rejected and the difference is unlikely to be equal to zero. For the variable totrob we only test values before the changes in surveillance policy. We did not find any code that would calculate the standard deviation directly and our manual calculations failed to replicate the numbers in the original paper.
+The values reported in the column 6 are p-values from Welch two-sample t-test for equal means with 2 sided alternative hypothesis. A small p-value therefore means that the null can be rejected and the difference is unlikely to be equal to zero. For the variable totrob we only test values before the changes in surveillance policy. We did not find any code that would calculate the standard deviation for the difference directly and our manual calculations failed to replicate the numbers in the original paper.
 
 
 3. Replicate table 3. (3p.)
@@ -147,10 +144,9 @@ data$twoblock <- ifelse(data$distanci==2,1,0)
 data$postt <- ifelse(data$mes>7 & data$mes<70,1,0)
 ```
 
-Column A: The difference-in-difference estimator is 
-
+\textbf{Column A:} The difference-in-difference estimator is 
 $$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} +M_t + F_i +\varepsilon_{it}$$
-where $Car \; Theft_{it}$ are the number of car thefts in block i for month i, $ Same \; Block \; Police_{it} $ is the interaction term between institu1 and postt (=the treatment variable), $M_t$ are the month fixed effects, $F_t$ are block fixed effects and $\varepsilon_{it}$ is the error term. Since block fixed effects are used, we use clustered standard errors. 
+where $Car \; Theft_{it}$ are the number of car thefts in block i for month i, $Same \; Block \; Police_{it}$ is the interaction term between institu1 and postt (=the treatment variable), $M_t$ are the month fixed effects, $F_t$ are block fixed effects and $\varepsilon_{it}$ is the error term. Since block fixed effects are used, we use clustered standard errors. 
 
 Creating the treatment variables and dropping months 72 and 73:
 
@@ -168,23 +164,21 @@ m3a <- felm(data=data, totrob ~ SameBlock | mes + observ | 0 | observ)
 
 ```
 
-Column B: The difference-in-difference estimator is like in A, but now also includes a treatment variable for one-block distance (One-Block Police = institu3_neww*postt):
-
+\textbf{Column B:} The difference-in-difference estimator is like in A, but now also includes a treatment variable for one-block distance (One-Block Police = institu3_neww*postt):
 $$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} +M_t + F_i +\varepsilon_{it}$$
 ```{r}
 m3b <- felm(data=data, totrob ~ SameBlock + OneBlock | mes + observ | 0 | observ)
 ```
 
-Column C: Like in B, but adding a treatment variable for Two-Block Police (=twoblock*postt):
 
+\textbf{Column C:} Like in B, but adding a treatment variable for Two-Block Police (=twoblock*postt):
 $$Car \; Theft_{it} = \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} + \alpha_2 Two\; Block\; Police_{it} + M_t + F_i +\varepsilon_{it}$$
 ```{r}
 m3c <- felm(data=data, totrob ~ SameBlock + OneBlock + TwoBlock | mes + observ | 0 | observ)
 
 ```
 
-Column D: The cross section regression uses data only from after the terrorist attack and doesn't include block-fixed effects:
-
+\textbf{Column D}: The cross section regression uses data only from after the terrorist attack and doesn't include block-fixed effects:
 $$Car \; Theft_{it} = \beta_0 + \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} + \alpha_2 Two\; Block\; Police_{it} + M_t +\varepsilon_{it}$$
 Now $Same \; Block \; Police_{it}, \; One \; Block \; Police_{it}$ and $Two\; Block\; Police_{it}$ have not been interacted with the post variable, since data is only from when postt=1. We use robust standard errors. 
 
@@ -203,8 +197,7 @@ Robust standard errors:
 coeftest(model3d, vcov= vcovHC(model3d, "HC1"))
 ```
 
-Column E: The time-series regression only uses data from the Jewish blocks (up to two block distance): 
-
+\textbf{Column E:} The time-series regression only uses data from the Jewish blocks (up to two block distance): 
 $$Car \; Theft_{it} = \beta_0 + \alpha_0 \; Same \; Block \; Police_{it} + \alpha_1 One \; Block \; Police_{it} + \alpha_2 Two\; Block\; Police_{it} + F_i +\varepsilon_{it}$$
 Also the different lengths of the months are taken into account in the new totrob2 variable: 
 
