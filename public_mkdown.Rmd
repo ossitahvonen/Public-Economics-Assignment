@@ -60,7 +60,7 @@ As was also stated in the paper, there were also other contemporaneous reforms a
 
 2. Open data and provide summary statistics similar to those in table 1. (2p.)
 
-We note here that the data provided in the ".dta" format and the data in ".xls" format are different and provide differing results. We were able to obtain the correct regression results using ".dta" -file so we use it throughout the exercise. The main problem seems to be the totrob-variable, which gets values between 0 and 1 in the "dta" -file but is rounded up or down in the ".xls" -file. The picture draw in part 4 is also different with both data, and is more similar to the picture in the Assignment session slides.
+We note here that the data provided in the ".dta" format and the data in ".xls" format are different and provide differing results. We were able to obtain the correct regression results using ".dta" -file so we use it throughout the exercise. The main problem seems to be the totrob-variable, which gets values between 0 and 1 in the "dta" -file but is rounded up or down in the ".xls" -file. The picture drawn in part 4 is also different with both data, and is more similar to the picture in the Assignment session slides.
 
 
 
@@ -120,11 +120,17 @@ distanci & 3.66 & 1.83 & 0.81 & 0.39 & 2.84 \\
 \caption{DEMOGRAPHIC CHARACTERISTICS OF CONTROL AND TREATMENT AREAS} 
 \end{table}
 
+
+
+
+
+
+
 VIKAT SD PUUTTUUUUUUU!!!!!!!!!!!
 
 3. Replicate table 3. (3p.)
 
-The authors use mostly Hubert-White standard errors. In table 5, they also examine the clustering in standard errors. The clustering seems to have no effect. As shown in the exercise session, we use clustered standard errors in regressions A-C and E. The specifications of functions in R differ between packages and are different from Stata, so the results we obtain are different but accurate up to 4 decimals.
+The authors use mostly Hubert-White standard errors. In table 5, they also examine the clustering in standard errors. The clustering seems to have no effect. As shown in the exercise session, we use clustered standard errors in regressions A-C and E and robust standard errors in regression D. The specifications of functions in R differ between packages and are different from Stata, so the results we obtain are different but accurate up to 4 decimals.
 
 
 In the data set, institu3 variable is 1 also when there is a protected institution in the same block (i.e. when institut1 = 1). Creating new institu3 variable that equals 1 only when institu1 is 0:
@@ -132,8 +138,6 @@ In the data set, institu3 variable is 1 also when there is a protected instituti
 ```{r}
 data$institu3_neww <- data$institu3-data$institu1
 
-table(data$institu1,data$institu3)
-table(data$institu1,data$institu3_neww)
 ```
 
 Creating new indicator variables for two-block distance from the nearest protected institution (twoblock) and for time after the terrorist attack (postt):
@@ -161,7 +165,7 @@ Fixed effect regression (mes and observ as the fixed effects, clustering wrt. ob
 
 ```{r}
 m3a <- felm(data=data, totrob ~ SameBlock | mes + observ | 0 | observ)
-summary(m3a)
+
 ```
 
 Column B: The difference-in-difference estimator is like in A, but now also includes a treatment variable for one-block distance (One-Block Police = institu3_neww*postt):
@@ -220,7 +224,7 @@ summary(m3e)
 
 Collecting the results: 
 
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, results=FALSE}
 stargazer(m3a,m3b, m3c, model3d, m3e, column.separate=c(3,1,1), 
           column.labels=c("Difference-in-difference","Cross section"," Time series"),
           dep.var.labels.include = FALSE, dep.var.caption = "", model.names = FALSE,
@@ -264,6 +268,7 @@ R$^{2}$ & 0.198 & 0.198 & 0.198 & 0.004 & 0.189 \\
 4. Plot a figure of choice describing the DID-effects. (2p.)
 
 ```{r, results=F}
+#calculate means
 datamean_treat <- data[data$institu1==1,] %>% as.tibble() %>%
   group_by(mes) %>%
   summarise_at(vars(totrob),
@@ -284,9 +289,9 @@ n_treat <- nrow(data[data$institu1==1,])
 
 colnames(datamean) <- c("mes","name2", "sdev2", "name", "sdev", "dif")
 
-
+#set colors
 colors1 <- c("Treatment Group" = "red", "Control Group" = "blue")
-
+#draw
 p1 <- ggplot(data = datamean, aes(x=mes)) +
   geom_point(aes(x=mes, y = name, color = "Treatment Group")) + geom_line(aes(x=mes, y = name, color = "Treatment Group")) +
   geom_point(aes(x = mes, y = name2, colour = "Control Group")) + 
@@ -307,6 +312,7 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
 p1
 ```
 
+
 5. Discuss the results. (3p.)
 a. What do the estimation results in table 3 tell?
 
@@ -314,7 +320,7 @@ There are statistically significant effects for the increased police presence on
 
 Instead, the coefficients for the other police presence variables are not statistically significantly different from zero in any regressions. This shows that the effect of the  increased surveillance was quite local, but also that there seems to not be any displacement of crime to these neighborhoods, which could be considered next targets as the criminals assumably prefer closeby targets.
 
-Similar conlusions can be reached with different regressions, ie. time series and cross-sectional data. This shows tha results are robust, because _______.?????
+Similar conlusions can be reached with different regressions, ie. time series and cross-sectional data. This shows that results are robust, because nothing remarkably different arises from these regressions, since the coefficients are almost similar in all cases. 
 
 
 
@@ -322,11 +328,11 @@ b. What are the potential concerns in the research set up?
 
 Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. This is required for the control group to provide a credible counterfactual to treatment. There is no statistical test for this assumption. It can be assessed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. The trends seem to be somewhat parellel before the treatment. Table 4 of the paper also presents estimates for different time periods to check for this assumption, and finds that there are effects even if the treatment is started later.
 
-It also seems that the increase surveillance was randomly determined in the sense that the areas with and without Jewish institutions are remarkable similar, as can be seen from Table 1.
+It also seems that the increase surveillance was randomly determined in the sense that the areas with and without Jewish institutions are remarkable similar, as can be seen from Table 1. So the design seems a credible solution to the endogeneity problem, ie. more police officers in areas with already more crime.
 
 The authors also explore the possibility that there were other simultaneous treatments in addition to the increase in police presence, such as parking restrictions. They present evidence that this alone can not explain the change in car thefts. They also examine the chance that people (drivers or criminals) adjusted their behaviour because of fear and this caused the reduction in thefts instead of the police presence. They find no evidence of short effects like this, which still leaves the possibility of the effect being longer than the data. 
 
-Of course,if there are problems in the data, a perfect research design will still fail. The authors consider some problems in the data, ie. reporting of crime, and present evidence of why these do not cause problems for the research.
+Of course,if there are problems in the data, a perfect research design will still fail. The authors consider some problems in the data, ie. reporting of crime adn effectiveness of police preventing car theft while securing other locations, and present evidence of why these do not cause problems for the research.
 
 
 c. What do we learn from the paper? Discuss the internal and external validity of the study.
@@ -339,7 +345,11 @@ Important question regarding the validity is the chance that crime simply switch
 
 
 
-##References
+## References
 
+## Appendix
 
-
+Summaries of the regressions
+```{r}
+summary(m3a)
+```
