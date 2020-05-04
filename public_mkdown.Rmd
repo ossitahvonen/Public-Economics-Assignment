@@ -51,6 +51,10 @@ C) How would you comment on the credibility of the research design? Are there si
 
 2. Open data and provide summary statistics similar to those in table 1. (2p.)
 
+We note here that the data provided in the ".dta" format and the data in ".xls" format are different and provide differing results. We were able to obtain the correct regression results using ".dta" -file so we use it throughout the exercise. The main problem seems to be the totrob-variable, which gets values between 0 and 1 in the "dta" -file but is rounded up or down in the ".xls" -file. The picture draw in part 4 is also different with both data, and is more similar to the picture in the Assignment session slides.
+
+
+
 ```{r, message=FALSE, warning=FALSE}
 #packages
 library(MASS)
@@ -280,7 +284,7 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
   xlab("Months") + ylab("Mean crime") +
   theme(legend.position="bottom") +
   labs(x = "Months",
-       y = "Mean Crime, 95% CI",
+       y = "Mean Car Theft per month, 95% CI",
        color = "Legend") +
   scale_color_manual(values = colors1)
 
@@ -289,6 +293,7 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
 ```{r}
 p1
 ```
+
 5. Discuss the results. (3p.)
 a. What do the estimation results in table 3 tell?
 
@@ -301,8 +306,11 @@ Instead, the coefficients for the other police presence variables are not statis
 b. What are the potential concerns in the research set up?
 
 THINGS TO ADDRESS
+
 -standard errors
+
 -data
+
 -regression E
 
 
