@@ -111,21 +111,21 @@ table1 <- xtable(table, caption="DEMOGRAPHIC CHARACTERISTICS OF CONTROL AND TREA
 
 \begin{table}[ht]
 \centering
-\begin{tabular}{rrrrrr}
+\begin{tabular}{rrrrrrr}
   \hline
- & \begin{tabular}{@{}l@{}} Census tracts without\\ Jewish institutions (A)\\\end{tabular} & SD(A) & \begin{tabular}{@{}l@{}} Census tracts with\\ Jewish institutions (B)\\\end{tabular}& SD(B) & Difference (C)=(A)-(B) \\ 
+ & \begin{tabular}{@{}l@{}} Census tracts without\\ Jewish institutions (A)\\\end{tabular} & SD(A) & \begin{tabular}{@{}l@{}} Census tracts with\\ Jewish institutions (B)\\\end{tabular}& SD(B) & Difference (C)=(A)-(B) & p \\ 
   \hline
-distanci & 3.66 & 1.83 & 0.81 & 0.39 & 2.84 \\ 
-  edpub & 0.03 & 0.17 & 0.05 & 0.21 & -0.02 \\ 
-  estserv & 0.02 & 0.15 & 0.02 & 0.12 & 0.01 \\ 
-  banco & 0.08 & 0.27 & 0.08 & 0.26 & 0.00 \\ 
-  totrob & 0.08 & 0.23 & 0.08 & 0.23 & 0.01 \\ 
+distanci & 3.66 & 1.83 & 0.81 & 0.39 & 2.84 & < 2.2e-16\\ 
+  edpub & 0.03 & 0.17 & 0.05 & 0.21 & -0.02 & 0.0003367\\ 
+  estserv & 0.02 & 0.15 & 0.02 & 0.12 & 0.01 & 0.02565\\ 
+  banco & 0.08 & 0.27 & 0.08 & 0.26 & 0.00 & 0.5485\\ 
+  totrob & 0.08 & 0.23 & 0.08 & 0.23 & 0.01 & 0.7718\\ 
    \hline
 \end{tabular}
 \caption{DEMOGRAPHIC CHARACTERISTICS OF CONTROL AND TREATMENT AREAS} 
 \end{table}
 
-
+The values reported in the column 6 are p-values from Welch two-sample t-test for equal means with 2 sided alternative hypothesis. A small p-value therefore means that the null can be rejected and the difference is unlikely to be equal to zero. For the variable totrob we only test values before the changes in surveillance policy. We did not find any code that would calculate the standard deviation directly and our manual calculations failed to replicate the numbers in the original paper.
 
 
 3. Replicate table 3. (3p.)

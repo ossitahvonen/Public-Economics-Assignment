@@ -37,9 +37,7 @@ setwd(goalwd)
 #load data (in same folder)
 data <- read.csv2("MonthlyPanel.csv", header = T)
 #data <- read.dta("MonthlyPanel.dta")
-data==data2
-View(data2)
-data2[data2$totrob<1&data$totrob>0,]
+
 
 ########################
 #2. Open data and provide summary statistics similar to those in table 1.
@@ -66,7 +64,12 @@ SD <- cbind(apply(data2[data2$jewin==0,],2,sd),apply(data2[data2$jewin==1,],2,sd
 SD
 
 t.test(data2[data2$jewin==0,]$edpub,data2[data2$jewin==1,]$edpub)
+t.test(data2[data2$jewin==0,]$estserv,data2[data2$jewin==1,]$estserv)
+t.test(data2[data2$jewin==0,]$totrob,data2[data2$jewin==1,]$estserv)
 t.test(data2[data2$jewin==0,]$banco,data2[data2$jewin==1,]$banco)
+t.test(data2[data2$jewin==0,]$distanci,data2[data2$jewin==1,]$distanci)
+
+t.test(data[(data$jewin==0 & data$mes < 7),]$totrob,data[(data$jewin==1 & data$mes < 7),]$totrob)
 
 
 ######
