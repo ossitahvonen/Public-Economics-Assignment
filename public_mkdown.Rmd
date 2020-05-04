@@ -26,9 +26,11 @@ C) How would you comment on the impact of the size of the public sector on econo
 
 The question overall is important and answering it, keeping in mind the restrictions of econometrics, is therefore an important task.
 
-It seems that there is, if the econometric approach is considered viable, a negative impact between the size of the public sector and the economic growth. As noted before, this is questionable. The robustness tests show that the result can be extended to differing combinations of controlling variables. This lends credibility to the result. Of course, as the title of the paper suggests, the results are only from the data in rich countries, and the result can not be extrapolated to developing countries.
+It seems that there is, if the econometric approach is considered viable, a negative impact between the size of the public sector and the economic growth.  As noted before, this is questionable. The robustness tests show that the result can be extended to differing combinations of controlling variables. The effect seems to be somewhat result of chages in savings. This lends credibility to the result. Of course, as the title of the paper suggests, the results are only from the data in rich countries, and the result can not be extrapolated to developing countries.
 
-There is also need to note that the results of this research only concern the sample of relatively high-income countries. If one were to exrapolate the results to some lower income level countries, it could result in a problematic interpretation. The question can therefore be answered only on behalf the countries that represent the sample. In addition, the paper does not concern the structure of the public expenditure. The result does not therefore mean that all public spending is bad for economomic growth and some expenditure might be beneficial (for instance government actions in coronavirus situation).
+There is also need to note that the results of this research only concern the sample of relatively high-income countries. If one were to exrapolate the results to some lower income level countries, it could result in a problematic interpretation. The question can therefore be answered only on behalf the countries that represent the sample. In addition, the paper does not concern the structure of the public expenditure. The result does not therefore mean that all public spending is bad for economomic growth and some expenditure might be beneficial (for instance government actions in coronavirus situation). Moreover, a relevant question for policy is also how the growth is distributed and how this affects well-being of people, and this is something the result does not consider.
+
+
 
 
 
@@ -111,7 +113,7 @@ table1 <- xtable(table, caption="DEMOGRAPHIC CHARACTERISTICS OF CONTROL AND TREA
 \centering
 \begin{tabular}{rrrrrr}
   \hline
- & Census tracts without Jewish institutions (A) & SD(A) & Census tracts with Jewish institutions (B) & SD(B) & Difference (C)=(A)-(B) \\ 
+ & \begin{tabular}{@{}l@{}} Census tracts without\\ Jewish institutions (A)\\\end{tabular} & SD(A) & \begin{tabular}{@{}l@{}} Census tracts with\\ Jewish institutions (B)\\\end{tabular}& SD(B) & Difference (C)=(A)-(B) \\ 
   \hline
 distanci & 3.66 & 1.83 & 0.81 & 0.39 & 2.84 \\ 
   edpub & 0.03 & 0.17 & 0.05 & 0.21 & -0.02 \\ 
@@ -125,11 +127,6 @@ distanci & 3.66 & 1.83 & 0.81 & 0.39 & 2.84 \\
 
 
 
-
-
-
-
-VIKAT SD PUUTTUUUUUUU!!!!!!!!!!!
 
 3. Replicate table 3. (3p.)
 
@@ -440,8 +437,8 @@ p1 <- ggplot(data = datamean, aes(x=mes)) +
   scale_color_manual(values = colors1)
 
 ```
-Figure with the ".xls" -file. Notable there are some differences reflecting the differences in the datasets.
+Figure with the ".xls" -file. Notable there are some differences reflecting the differences in the datasets. The code is similar to the code for the other graph and is not shown.
 
-```{r}
+```{r, echo=FALSE}
 p1
 ```
