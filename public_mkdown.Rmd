@@ -294,13 +294,16 @@ a. What do the estimation results in table 3 tell?
 
 There are statistically significant effects for the Police on the same block across all specifications. 
 
-Instead, the coefficients for the other police presence variables are not statistically significantly different from zero in any regressions. They can be observed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. 
+Instead, the coefficients for the other police presence variables are not statistically significantly different from zero in any regressions. 
 
 
 
 b. What are the potential concerns in the research set up?
 
-Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. There is no statistical test for this assumption.
+Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. There is no statistical test for this assumption. It can be assessed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. The trends seem to be somewhat parellel before the treatment. This is required for the control group to provide a credible counterfactual to treatment.
+
+The authors also explore the possibility that there were other simultaneous treatments in addition to the increase in police presence, such as parking restrictions. They present evidence that this alone can not explain the change in car thefts.
+
 
 c. What do we learn from the paper? Discuss the internal and external validity of the study.
 
