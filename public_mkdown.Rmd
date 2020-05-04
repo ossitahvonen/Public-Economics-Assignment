@@ -115,7 +115,11 @@ VIKAT SD PUUTTUUUUUUU!!!!!!!!!!!
 
 3. Replicate table 3. (3p.)
 
+The authors use mostly Hubert-White standard errors. In table 5, they also examine the clustering in standard errors. The clustering seems to have no effect. As shown in the exercise session, we use clustered standard errors in regressions A-C and E. The specifications of functions in R differ between packages and are different from Stata, so the results we obtain are different but accurate up to 4 decimals.
+
+
 In the data set, institu3 variable is 1 also when there is a protected institution in the same block (i.e. when institut1 = 1). Creating new institu3 variable that equals 1 only when institu1 is 0:
+
 ```{r}
 data$institu3_neww <- data$institu3-data$institu1
 
@@ -307,13 +311,11 @@ b. What are the potential concerns in the research set up?
 
 THINGS TO ADDRESS
 
--standard errors
-
 -data
 
 -regression E
 
-
+Similar conlusions can be reached with different regressions, ie. time series and cross-sectional data.
 
 
 Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. This is required for the control group to provide a credible counterfactual to treatment. There is no statistical test for this assumption. It can be assessed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. The trends seem to be somewhat parellel before the treatment. Table 4 of the paper also presents estimates for different time periods to check for this assumption, and finds that there are effects even if the treatment is started later.
