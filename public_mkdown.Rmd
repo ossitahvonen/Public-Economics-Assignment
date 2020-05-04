@@ -316,7 +316,7 @@ THINGS TO ADDRESS
 
 
 
-Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. This is required for the control group to provide a credible counterfactual to treatment. There is no statistical test for this assumption. It can be assessed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. The trends seem to be somewhat parellel before the treatment. Table 4 also presents estimates for different time periods to check for this assumption, and finds that there are effects even if the treatment is started later.
+Using differences in differences estimation, the most important threat to estimation is violation if the parallel trends assumption. This is required for the control group to provide a credible counterfactual to treatment. There is no statistical test for this assumption. It can be assessed visually from graphs like Picture 1. The picture however only shows the means and not the controls, namely block and month dummies, used in regressions. The trends seem to be somewhat parellel before the treatment. Table 4 of the paper also presents estimates for different time periods to check for this assumption, and finds that there are effects even if the treatment is started later.
 
 The authors also explore the possibility that there were other simultaneous treatments in addition to the increase in police presence, such as parking restrictions. They present evidence that this alone can not explain the change in car thefts. They also examine the chance that people (drivers or criminals) adjusted their behaviour because of fear and this caused the reduction in thefts instead of the police presence. They find no evidence of short effects like this, which still leaves the possibility of the effect being longer than the data. 
 
@@ -327,8 +327,11 @@ The internal validity is addressed in the previous question and somewhat in the 
 
 On the external validity, some questions can be expressed. The authors examine effects of car price, time of day and day of the week. There are still effects, which lends credibility to idea that the results could be extrapolated. However, the neighborhoods considered were high-middle income areas and represents a small part of the city, with most thefts concentrating on low-income areas.
 
-##References
+Important question regarding the validity is the chance that crime simply switched neighborhoods. There are no significant effects on the neighboring blocks, where the crime could have moved, as shown in table 3. Other than this, the data does not allow us to learn about the displacement of crime.
 
+
+
+##References
 
 
 
