@@ -1,7 +1,7 @@
 ---
 title: "Public Economics Assignment"
 author: "Miia Janatuinen, Ossi Tahvonen"
-date: "23/03/2020"
+date: "04/05/2020"
 output: pdf_document
 ---
 
@@ -258,6 +258,8 @@ The estimates in this regression have been rounded and the precise summaries can
 
 4. Plot a figure of choice describing the DID-effects. (2p.)
 
+We are plotting a figure with group means each month with standard errors. The treatment effects are visible as the difference between the means after the attack.
+
 ```{r, results=F}
 #calculate means
 datamean_treat <- data[data$institu1==1,] %>% as.tibble() %>%
@@ -340,6 +342,12 @@ Important question regarding the validity is the chance that crime simply switch
 
 
 ## References
+
+Blundell, R. and Brewer, M. and Shephard, A. (2005) Evaluating the labour market impact of Working Families' Tax Credit using difference-in-differences. Research report. HMRC Working Papers (4). HM Revenue and Customs, London, UK.
+
+Di Tella, Rafael, and Ernesto Schargrodsky. (2004). Do Police Reduce Crime? Estimates Using the Allocation of Police Forces After a Terrorist Attack. American Economic Review, 94 (1): 115-133.
+
+Folster, Stefan & Henrekson, Magnus. (2001). Growth Elects of Government Expenditure and Taxation in Rich Countries. European Economic Review. 45. 1501-1520. 10.1016/S0014-2921(00)00083-0.
 
 ## Appendix
  
